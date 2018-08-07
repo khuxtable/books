@@ -21,6 +21,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName.VOLUME_BORROWER_GOTO;
 import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName.VOLUME_TITLE_GOTO;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.kathrynhuxtable.books.persistence.domain.Borrower;
@@ -208,24 +209,22 @@ public class VolumePage extends AbstractPage {
 			if (!title.getText().equals(volume.getEntry() == null ? volume : volume.getEntry().getTitle())) {
 				return true;
 			}
-			if (!binding.getText().equals(volume.getBinding())) {
+			if (!Objects.equals(binding.getText(), volume.getBinding())) {
 				return true;
 			}
-			if (!publisher.getText().equals(volume.getPublisher())) {
+			if (!Objects.equals(publisher.getText(), volume.getPublisher())) {
 				return true;
 			}
-			if (!published.getText().equals(volume.getPublicationDate())) {
+			if (!Objects.equals(published.getText(), volume.getPublicationDate())) {
 				return true;
 			}
-			if (!isbn.getText().equals(volume.getIsbn())) {
+			if (!Objects.equals(isbn.getText(), volume.getIsbn())) {
 				return true;
 			}
-			if (!libraryOfCongress.getText().equals(volume.getLibraryOfCongress())) {
+			if (!Objects.equals(libraryOfCongress.getText(), volume.getLibraryOfCongress())) {
 				return true;
 			}
-			if (StringUtils.isEmpty(note.getText()) && !StringUtils.isEmpty(volume.getNote())) {
-				return true;
-			} else if (!StringUtils.isEmpty(note.getText()) && !note.getText().equals(volume.getNote())) {
+			if (!Objects.equals(note.getText(), volume.getNote())) {
 				return true;
 			}
 			if (!borrower.getText().equals(volume.getBorrower() == null ? "" : volume.getBorrower().getName())) {

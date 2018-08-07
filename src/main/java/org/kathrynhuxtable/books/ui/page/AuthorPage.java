@@ -19,6 +19,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName.BROWSE;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeSet;
 
@@ -171,31 +172,25 @@ public class AuthorPage extends AbstractPage {
 
 	public boolean isChangedInternal() {
 		if (author != null) {
-			if (!lastName.getText().equals(author.getLastName())) {
+			if (!Objects.equals(lastName.getText(), author.getLastName())) {
 				return true;
 			}
-			if (!firstName.getText().equals(author.getFirstName())) {
+			if (!Objects.equals(firstName.getText(), author.getFirstName())) {
 				return true;
 			}
-			if (!nationality.getText().equals(author.getNationality())) {
+			if (!Objects.equals(nationality.getText(), author.getNationality())) {
 				return true;
 			}
-			if (!birthPlace.getText().equals(author.getBirthPlace())) {
+			if (!Objects.equals(birthPlace.getText(), author.getBirthPlace())) {
 				return true;
 			}
-			if (birthDate.getValue() == null && author.getBirthDate() != null) {
-				return true;
-			} else if (birthDate.getValue() != null && !birthDate.getValue().equals(author.getBirthDate())) {
+			if (!Objects.equals(birthDate.getValue(), author.getBirthDate())) {
 				return true;
 			}
-			if (deathDate.getValue() == null && author.getDeathDate() != null) {
-				return true;
-			} else if (deathDate.getValue() != null && !deathDate.getValue().equals(author.getDeathDate())) {
+			if (!Objects.equals(deathDate.getValue(), author.getDeathDate())) {
 				return true;
 			}
-			if (StringUtils.isEmpty(note.getText()) && !StringUtils.isEmpty(author.getNote())) {
-				return true;
-			} else if (!StringUtils.isEmpty(note.getText()) && !note.getText().equals(author.getNote())) {
+			if (!Objects.equals(note.getText(), author.getNote())) {
 				return true;
 			}
 			if (!checkLists(titles.getItems(), new ArrayList<>(author.getTitles()))) {

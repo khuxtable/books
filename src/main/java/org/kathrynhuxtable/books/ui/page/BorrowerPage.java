@@ -19,6 +19,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName.BROWSE;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.kathrynhuxtable.books.persistence.domain.Borrower;
@@ -145,18 +146,16 @@ public class BorrowerPage extends AbstractPage {
 	@Override
 	protected boolean isChangedInternal() {
 		if (borrower != null) {
-			if (!lastName.getText().equals(borrower.getLastName())) {
+			if (!Objects.equals(lastName.getText(), borrower.getLastName())) {
 				return true;
 			}
-			if (!firstName.getText().equals(borrower.getFirstName())) {
+			if (!Objects.equals(firstName.getText(), borrower.getFirstName())) {
 				return true;
 			}
-			if (!checkOutDate.getText().equals(borrower.getCheckOutDate())) {
+			if (!Objects.equals(checkOutDate.getText(), borrower.getCheckOutDate())) {
 				return true;
 			}
-			if (StringUtils.isEmpty(note.getText()) && !StringUtils.isEmpty(borrower.getNote())) {
-				return true;
-			} else if (!StringUtils.isEmpty(note.getText()) && !note.getText().equals(borrower.getNote())) {
+			if (!Objects.equals(note.getText(), borrower.getNote())) {
 				return true;
 			}
 			if (!checkLists(volumes.getItems(), new ArrayList<>(borrower.getVolumes()))) {

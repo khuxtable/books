@@ -30,6 +30,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName.TITLE_VOLUME_REMOVE;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeSet;
 
@@ -232,16 +233,16 @@ public class TitlePage extends AbstractPage {
 	@Override
 	protected boolean isChangedInternal() {
 		if (titleObj != null) {
-			if (!title.getText().equals(titleObj.getTitle())) {
+			if (!Objects.equals(title.getText(), titleObj.getTitle())) {
 				return true;
 			}
 			if (!checkLists(authors.getItems(), titleObj.getAuthors())) {
 				return true;
 			}
-			if (!category.getValue().equals(titleObj.getCategory())) {
+			if (!Objects.equals(category.getValue(), titleObj.getCategory())) {
 				return true;
 			}
-			if (!form.getValue().equals(titleObj.getForm())) {
+			if (!Objects.equals(form.getValue(), titleObj.getForm())) {
 				return true;
 			}
 			if (!published.getText().equals(titleObj.getPublicationYear() == 0 ? "" : Integer.toString(titleObj.getPublicationYear()))) {
@@ -253,9 +254,7 @@ public class TitlePage extends AbstractPage {
 			if (!checkLists(volumes.getItems(), new ArrayList<>(titleObj.getVolumes()))) {
 				return true;
 			}
-			if (StringUtils.isEmpty(note.getText()) && !StringUtils.isEmpty(titleObj.getNote())) {
-				return true;
-			} else if (!StringUtils.isEmpty(note.getText()) && !note.getText().equals(titleObj.getNote())) {
+			if (!Objects.equals(note.getText(), titleObj.getNote())) {
 				return true;
 			}
 			if (!checkLists(contents.getItems(), titleObj.getContents())) {
