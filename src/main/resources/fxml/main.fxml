@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright 2002-2018 the original author or authors.
+
+	Licensed under the Apache License, Version 2.0 (the "License"); you may not
+	use this file except in compliance with the License. You may obtain a copy of
+	the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+	License for the specific language governing permissions and limitations under
+	the License.
+-->
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.MenuBar?>
+<?import org.kathrynhuxtable.books.ui.control.MainBooksPane?>
+<?import org.kathrynhuxtable.books.ui.control.TitledToolBar?>
+<?import org.kathrynhuxtable.books.ui.control.SearchBox?>
+<?import org.kathrynhuxtable.books.ui.controller.MainController?>
+<?import org.kathrynhuxtable.books.ui.element.SearchPopover?>
+<?import org.kathrynhuxtable.books.ui.page.AuthorPage?>
+<?import org.kathrynhuxtable.books.ui.page.BorrowerPage?>
+<?import org.kathrynhuxtable.books.ui.page.TitlePage?>
+<?import org.kathrynhuxtable.books.ui.page.VolumePage?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.geometry.Insets?>
+
+<MainBooksPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" prefHeight="768" prefWidth="1024" styleClass="background" xmlns:fx="http://javafx.com/fxml"
+	fx:controller="org.kathrynhuxtable.books.ui.controller.MainController">
+	<menuBar>
+		<MenuBar useSystemMenuBar="true">
+			<menus>
+				<Menu text="File">
+					<items>
+						<MenuItem fx:id="rebuildIndexes" text="Rebuild Indexes" />
+						<MenuItem fx:id="menuExit" text="Exit" />
+					</items>
+				</Menu>
+				<Menu text="Form">
+					<items>
+						<MenuItem fx:id="menuNew" text="New" />
+						<MenuItem fx:id="menuCancel" text="Cancel" />
+						<MenuItem fx:id="menuSave" text="Save" />
+						<MenuItem fx:id="menuDelete" text="Delete" />
+						<SeparatorMenuItem />
+						<RadioMenuItem fx:id="menuGotoAuthors" text="Go to Authors Form" />
+						<RadioMenuItem fx:id="menuGotoTitles" text="Go to Titles Form" />
+						<RadioMenuItem fx:id="menuGotoVolumes" text="Go to Volumes Form" />
+						<RadioMenuItem fx:id="menuGotoBorrowers" text="Go to Borrowers Form" />
+					</items>
+				</Menu>
+				<Menu text="Authors" fx:id="authorsMenu">
+					<MenuItem fx:id="menuAuthorTitleGoto" text="Go to Title" />
+				</Menu>
+				<Menu text="Titles" fx:id="titlesMenu">
+					<MenuItem fx:id="menuTitleAuthorMoveUp" text="Move Author Up" />
+					<MenuItem fx:id="menuTitleAuthorMoveDown" text="Move Author Down" />
+					<MenuItem fx:id="menuTitleAuthorAdd" text="Add Author" />
+					<MenuItem fx:id="menuTitleAuthorRemove" text="Remove Author" />
+					<MenuItem fx:id="menuTitleAuthorGoto" text="Go to Author" />
+					<SeparatorMenuItem />
+					<MenuItem fx:id="menuTitleVolumeAdd" text="New Volume" />
+					<MenuItem fx:id="menuTitleVolumeRemove" text="Remove Volume" />
+					<MenuItem fx:id="menuTitleVolumeGoto" text="Go to Volume" />
+					<SeparatorMenuItem />
+					<MenuItem fx:id="menuTitleContentMoveUp" text="Move Content Up" />
+					<MenuItem fx:id="menuTitleContentMoveDown" text="Move Content Down" />
+					<MenuItem fx:id="menuTitleContentAdd" text="Add Content" />
+					<MenuItem fx:id="menuTitleContentRemove" text="Remove Content" />
+					<MenuItem fx:id="menuTitleContentGoto" text="Go to Content" />
+					<SeparatorMenuItem />
+					<MenuItem fx:id="menuTitleCollectionGoto" text="Go to Collection" />
+				</Menu>
+				<Menu text="Volumes" fx:id="volumesMenu">
+					<MenuItem fx:id="menuVolumeTitleGoto" text="Go to Title" />
+					<MenuItem fx:id="menuVolumeBorrowerCheckOut" text="Check Out Volume" />
+					<MenuItem fx:id="menuVolumeBorrowerCheckIn" text="Check In Volume" />
+					<MenuItem fx:id="menuVolumeBorrowerGoto" text="Go to Borrower" />
+				</Menu>
+				<Menu text="Borrowers" fx:id="borrowersMenu">
+					<MenuItem fx:id="menuBorrowerVolumeGoto" text="Go to Volume" />
+				</Menu>
+				<Menu text="Help">
+					<MenuItem fx:id="menuHelpAbout" text="About Media Collection Database" />
+				</Menu>
+			</menus>
+		</MenuBar>
+	</menuBar>
+	<toolBar>
+		<TitledToolBar fx:id="toolBar" titleText="Author:0" styleClass="tool-bar, books-tool-bar">
+			<leftItems>
+				<Button fx:id="buttonBrowse" id="browse" text="Browse" prefHeight="30" />
+				<HBox>
+					<Button fx:id="buttonBack" id="back" styleClass="left-pill" prefWidth="30" prefHeight="30">
+						<graphic>
+							<Region />
+						</graphic>
+					</Button>
+					<Button fx:id="buttonForward" id="forward" styleClass="center-pill" prefWidth="30" prefHeight="30">
+						<graphic>
+							<Region />
+						</graphic>
+					</Button>
+					<Button fx:id="buttonHome" id="home" styleClass="right-pill" prefWidth="30" prefHeight="30">
+						<graphic>
+							<Region />
+						</graphic>
+					</Button>
+				</HBox>
+			</leftItems>
+			<rightItems>
+				<SearchBox fx:id="searchBox" prefWidth="300" />
+			</rightItems>
+		</TitledToolBar>
+	</toolBar>
+	<topButtons>
+		<GridPane alignment="center" styleClass="tool-bar, books-tool-bar">
+			<HBox>
+				<ToggleButton fx:id="buttonGotoAuthors" id="authors" text="Authors" styleClass="left-pill"
+					prefWidth="100" prefHeight="30" />
+				<ToggleButton fx:id="buttonGotoTitles" id="titles" text="Titles" styleClass="center-pill"
+					prefWidth="100" prefHeight="30" />
+				<ToggleButton fx:id="buttonGotoVolumes" id="volumes" text="Volumes" styleClass="center-pill"
+					prefWidth="100" prefHeight="30" />
+				<ToggleButton fx:id="buttonGotoBorrowers" id="borrowers" text="Borrowers" styleClass="right-pill"
+					prefWidth="100" prefHeight="30" />
+			</HBox>
+		</GridPane>
+	</topButtons>
+	<pageBrowser>
+		<fx:include source="page-browser.fxml" />
+	</pageBrowser>
+	<searchPopover>
+		<SearchPopover fx:id="searchPopover" />
+	</searchPopover>
+	<bottomButtons>
+		<ButtonBar>
+			<buttons>
+				<Button fx:id="buttonNew" text="New" />
+				<Button fx:id="buttonCancel" text="Cancel" />
+				<Button fx:id="buttonSave" text="Save" />
+				<Button fx:id="buttonDelete" text="Delete" />
+				<Button fx:id="buttonHelp" text="Help" ButtonBar.buttonData="HELP" />
+			</buttons>
+			<padding>
+				<Insets bottom="5" left="5" right="5" top="5" />
+			</padding>
+		</ButtonBar>
+	</bottomButtons>
+	<stylesheets>
+		<URL value="@../BooksAppStyles.css" />
+	</stylesheets>
+</MainBooksPane>

@@ -1,0 +1,32 @@
+# Database settings
+spring:
+  datasource:
+    url: jdbc:derby:${user.home}/.mediacollectiondatabase/db;
+    initialize: false
+    platform: derby
+    driverClassName: org.apache.derby.jdbc.EmbeddedDriver
+---
+# Hibernate Settings
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+      database-platform: org.hibernate.dialect.DerbyDialect
+    properties:
+      hibernate:
+        default_schema: APP
+        enable_lazy_load_no_trans: true
+        search:
+          default:
+            directory_provider: filesystem
+            indexBase: ${user.home}/.mediacollectiondatabase/index
+---
+logging:
+  level:
+    org.springframework.web: ERROR
+    org.kathrynhuxtable: INFO
+    org.apache: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: ${user.home}/.mediacollectiondatabase/mcdb.log

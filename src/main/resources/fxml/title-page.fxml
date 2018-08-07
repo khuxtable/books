@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright 2002-2018 the original author or authors.
+
+	Licensed under the Apache License, Version 2.0 (the "License"); you may not
+	use this file except in compliance with the License. You may obtain a copy of
+	the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+	WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+	License for the specific language governing permissions and limitations under
+	the License.
+-->
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.collections.FXCollections?>
+<?import org.kathrynhuxtable.books.ui.control.MainBooksPane?>
+<?import org.kathrynhuxtable.books.ui.control.TitledToolBar?>
+<?import org.kathrynhuxtable.books.ui.control.SearchBox?>
+<?import org.kathrynhuxtable.books.ui.page.TitlePage?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="org.kathrynhuxtable.books.ui.page.TitlePage">
+	<children>
+		<VBox>
+			<GridPane hgap="5" vgap="2">
+				<padding>
+					<Insets top="25" right="25" bottom="10" left="25" />
+				</padding>
+				<Label text="Title:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+				<TextField fx:id="title" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.hgrow="always" />
+			</GridPane>
+			<SplitPane orientation="horizontal">
+				<items>
+					<GridPane hgap="5" vgap="2">
+						<padding>
+							<Insets top="10" right="25" bottom="25" left="25" />
+						</padding>
+						<columnConstraints>
+							<ColumnConstraints minWidth="80" halignment="right" />
+							<ColumnConstraints halignment="left" hgrow="always" />
+						</columnConstraints>
+
+						<Label text="Author(s):" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="top" />
+						<ListView fx:id="authors" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="sometimes">
+							<contextMenu>
+								<ContextMenu>
+									<items>
+										<MenuItem fx:id="menuTitleAuthorMoveUp" text="Move Author Up" />
+										<MenuItem fx:id="menuTitleAuthorMoveDown" text="Move Author Down" />
+										<MenuItem fx:id="menuTitleAuthorAdd" text="Add Author" />
+										<MenuItem fx:id="menuTitleAuthorRemove" text="Remove Author" />
+										<MenuItem fx:id="menuTitleAuthorGoto" text="Go to Author" />
+									</items>
+								</ContextMenu>
+							</contextMenu>
+						</ListView>
+
+						<Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+						<ComboBox fx:id="category" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<String fx:value="Classical Music" />
+									<String fx:value="Fantasy" />
+									<String fx:value="Joke" />
+									<String fx:value="Literature" />
+									<String fx:value="Magazine" />
+									<String fx:value="Philosophy" />
+									<String fx:value="Poetry" />
+									<String fx:value="Popular Music" />
+									<String fx:value="Science" />
+									<String fx:value="Science Fantasy" />
+									<String fx:value="Science Fiction" />
+								</FXCollections>
+							</items>
+						</ComboBox>
+
+						<Label text="Form:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+						<ComboBox fx:id="form" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+							<items>
+								<FXCollections fx:factory="observableArrayList">
+									<String fx:value="Album" />
+									<String fx:value="Anthology" />
+									<String fx:value="Art" />
+									<String fx:value="Collection" />
+									<String fx:value="Essay" />
+									<String fx:value="Excerpt" />
+									<String fx:value="Graphic Novel" />
+									<String fx:value="Guide" />
+									<String fx:value="Joke" />
+									<String fx:value="Map" />
+									<String fx:value="Movie Outline" />
+									<String fx:value="Music" />
+									<String fx:value="Myth" />
+									<String fx:value="Novel" />
+									<String fx:value="Novel Section" />
+									<String fx:value="Novelette" />
+									<String fx:value="Novella" />
+									<String fx:value="Poem" />
+									<String fx:value="Screenplay" />
+									<String fx:value="Series" />
+									<String fx:value="Short Story" />
+									<String fx:value="Song" />
+									<String fx:value="Speech" />
+								</FXCollections>
+							</items>
+						</ComboBox>
+
+						<Label text="Published:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+						<GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+							<TextField fx:id="published" maxWidth="60" GridPane.columnIndex="0" GridPane.rowIndex="0"
+								GridPane.hgrow="never" />
+							<Label text=" " GridPane.hgrow="always" />
+							<CheckBox fx:id="haveRead" text="Have Read" GridPane.columnIndex="1" GridPane.rowIndex="0"
+								GridPane.halignment="right" GridPane.valignment="center" />
+						</GridPane>
+
+						<Label text="Volumes:" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.valignment="top" />
+						<ListView fx:id="volumes" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.vgrow="SOMETIMES">
+							<contextMenu>
+								<ContextMenu>
+									<items>
+										<MenuItem fx:id="menuTitleVolumeAdd" text="New Volume" />
+										<MenuItem fx:id="menuTitleVolumeRemove" text="Remove Volume" />
+										<MenuItem fx:id="menuTitleVolumeGoto" text="Go to Volume" />
+									</items>
+								</ContextMenu>
+							</contextMenu>
+						</ListView>
+
+						<Label text="Note:" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.valignment="top" />
+						<TextArea fx:id="note" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.vgrow="always" />
+					</GridPane>
+					<GridPane hgap="5" vgap="2">
+						<padding>
+							<Insets top="25" right="25" bottom="25" left="25" />
+						</padding>
+						<columnConstraints>
+							<ColumnConstraints minWidth="40" halignment="right" />
+							<ColumnConstraints halignment="left" hgrow="always" />
+						</columnConstraints>
+
+						<Label text="Contents:" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.valignment="top" />
+						<ListView fx:id="contents" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.vgrow="always">
+							<contextMenu>
+								<ContextMenu>
+									<items>
+										<MenuItem fx:id="menuTitleContentMoveUp" text="Move Content Up" />
+										<MenuItem fx:id="menuTitleContentMoveDown" text="Move Content Down" />
+										<MenuItem fx:id="menuTitleContentAdd" text="Add Content" />
+										<MenuItem fx:id="menuTitleContentRemove" text="Remove Content" />
+										<MenuItem fx:id="menuTitleContentGoto" text="Go to Content" />
+									</items>
+								</ContextMenu>
+							</contextMenu>
+						</ListView>
+
+						<Label text="Collected In:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.valignment="top" />
+						<ListView fx:id="collectedIn" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.vgrow="always">
+							<contextMenu>
+								<ContextMenu>
+									<items>
+										<MenuItem fx:id="menuTitleCollectionGoto" text="Go to Collection" />
+									</items>
+								</ContextMenu>
+							</contextMenu>
+						</ListView>
+					</GridPane>
+				</items>
+			</SplitPane>
+		</VBox>
+	</children>
+</StackPane>
