@@ -39,7 +39,7 @@ import org.kathrynhuxtable.books.service.TitlePropertyComparator;
 
 @Entity
 @Indexed
-@Table(name = "CHECK_OUTS")
+@Table(schema = "APP", name = "CHECK_OUTS")
 public class Borrower implements DomainObject, Cloneable, Comparable<Borrower>, Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -47,7 +47,7 @@ import org.kathrynhuxtable.books.service.TitlePropertyComparator;
 
 @Entity
 @Indexed
-@Table(name = "ENTRIES")
+@Table(schema = "APP", name = "ENTRIES")
 public class Title implements DomainObject, Cloneable, Comparable<Title>, Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -36,7 +36,7 @@ import org.kathrynhuxtable.books.service.DocumentType;
 
 @Entity
 @Indexed
-@Table(name = "VOLUMES")
+@Table(schema = "APP", name = "VOLUMES")
 public class Volume implements DomainObject, Cloneable, Comparable<Volume>, Serializable {
 
 	private static final long serialVersionUID = 1L;

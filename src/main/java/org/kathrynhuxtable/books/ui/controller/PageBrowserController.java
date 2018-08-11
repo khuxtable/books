@@ -192,7 +192,7 @@ public class PageBrowserController {
 
 	private AudioClip getAlertSound() {
 		if (alertSound == null) {
-			alertSound = new AudioClip("file:///System/Library/Sounds/Basso.aiff");
+			alertSound = new AudioClip("file:///C:/WINDOWS/media/Windows%20Ding.WAV");
 		}
 
 		return alertSound;
