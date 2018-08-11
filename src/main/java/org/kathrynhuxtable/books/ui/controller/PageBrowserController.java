@@ -51,6 +51,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.kathrynhuxtable.books.BooksApplication;
 import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.ui.control.Command;
 import org.kathrynhuxtable.books.ui.page.AbstractPage;
@@ -192,7 +193,11 @@ public class PageBrowserController {
 
 	private AudioClip getAlertSound() {
 		if (alertSound == null) {
-			alertSound = new AudioClip("file:///C:/WINDOWS/media/Windows%20Ding.WAV");
+			if (BooksApplication.IS_MAC) {
+				alertSound = new AudioClip("file:///System/Library/Sounds/Basso.aiff");
+			} else {
+				alertSound = new AudioClip("file:///C:/WINDOWS/media/Windows%20Ding.WAV");
+			}
 		}
 
 		return alertSound;
