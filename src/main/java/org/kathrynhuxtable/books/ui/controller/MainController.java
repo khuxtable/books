@@ -15,6 +15,9 @@
  */
 package org.kathrynhuxtable.books.ui.controller;
 
+import java.io.IOException;
+
+import org.kathrynhuxtable.books.BooksApplication;
 import org.kathrynhuxtable.books.service.BooksService;
 import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.ui.control.SearchBox;
@@ -24,12 +27,21 @@ import org.kathrynhuxtable.books.ui.element.SearchPopover;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import jfxtras.scene.control.ToggleGroupValue;
 
 @Component
@@ -40,6 +52,10 @@ public class MainController {
 	private BooksService booksService;
 	@Autowired
 	private PageBrowserController pageBrowserController;
+	@Autowired
+	private AboutDialogController aboutDialogController;
+	@Autowired
+	private HelpDialogController helpDialogController;
 
 	// Main page elements
 	@FXML
@@ -154,6 +170,8 @@ public class MainController {
 	private MenuItem menuBorrowerVolumeGoto;
 
 	@FXML
+	private MenuItem menuHelpHelp;
+	@FXML
 	private MenuItem menuHelpAbout;
 
 	private ToggleGroupValue<DocumentType> menuPageToggleGroup = new ToggleGroupValue<>();
@@ -170,11 +188,18 @@ public class MainController {
 		// Bind title to what is displayed in page browser.
 		toolBar.titleTextProperty().bind(pageBrowserController.currentPageTitleProperty());
 
-		// Wire exit and help.
+		// Wire File Menu
 		rebuildIndexes.setOnAction(event -> booksService.rebuildIndexes());
-		// TODO menuExit
-		// TODO buttonHelp
-		// TODO menuHelpAbout
+		if (BooksApplication.IS_MAC) {
+			menuExit.setVisible(false);
+		} else {
+			// FIXME Not perfect. Need Cmd-Q on a Mac to activate the doExit command.
+			menuExit.setOnAction(event -> doExit());
+		}
+
+		// Wire Help Menu
+		menuHelpHelp.setOnAction(event -> showHelpDialog(buttonHome.getScene().getWindow()));
+		menuHelpAbout.setOnAction(event -> showAboutDialog(buttonHome.getScene().getWindow()));
 
 		// Wire page goto buttons and menu items.
 		pageBrowserController.bindCommand(menuGotoAuthors, CommandName.GOTO_AUTHORS_PAGE);
@@ -258,5 +283,58 @@ public class MainController {
 
 	public void setBorrowersMenuVisible(boolean show) {
 		borrowersMenu.setVisible(show);
+	}
+
+	private void doExit() {
+		if (pageBrowserController.currentPageProperty().get().isChanged()) {
+			pageBrowserController.playAlertSound();
+			return;
+		}
+
+		Platform.exit();
+	}
+
+	private void showAboutDialog(Window owner) {
+		try {
+			final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/about-dialog.fxml"));
+			loader.setController(aboutDialogController);
+			final Parent root = loader.load();
+			final Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setTitle("About Media Collection Database");
+			stage.initOwner(owner);
+			stage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+				if (KeyCode.ESCAPE == event.getCode()) {
+					stage.close();
+				}
+			});
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void showHelpDialog(Window owner) {
+		try {
+			final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/help-dialog.fxml"));
+			loader.setController(helpDialogController);
+			final Parent root = loader.load();
+			final Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.initModality(Modality.NONE);
+			stage.setTitle("Media Collection Database Help");
+			stage.initOwner(owner);
+			stage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+				if (KeyCode.ESCAPE == event.getCode()) {
+					stage.close();
+				}
+			});
+			stage.setScene(scene);
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

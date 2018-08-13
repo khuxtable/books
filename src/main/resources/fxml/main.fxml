@@ -92,6 +92,7 @@
 					<MenuItem fx:id="menuBorrowerVolumeGoto" text="Go to Volume" />
 				</Menu>
 				<Menu text="Help">
+					<MenuItem fx:id="menuHelpHelp" text="Media Collection Database Help" />
 					<MenuItem fx:id="menuHelpAbout" text="About Media Collection Database" />
 				</Menu>
 			</menus>

@@ -1,0 +1,99 @@
+<html>
+<body style="font-family: Arial, Helvetica, San-serif">
+	<h1>Media Collection Database</h1>
+
+	<p>
+		The Media Collection Database is a simple application that maintains a
+		linked set of <a href="#authors">authors</a>, <a href="#titles">titles</a>,
+		<a href="#volumes">volumes</a>, and <a href="#borrowers">borrowers</a>.
+	</p>
+
+	<h2>Contents</h2>
+	<ul>
+		<li><a href="#basicConcepts">Basic Concepts</a>
+			<ul>
+				<li><a href="#authors">Authors</a></li>
+				<li><a href="#titles">Titles</a></li>
+				<li><a href="#volumes">Volumes</a></li>
+				<li><a href="#borrowers">Borrowers</a></li>
+			</ul></li>
+		<li><a href="#initialSetup">Initial Setup</a></li>
+	</ul>
+
+	<h2 id="basicConcepts">Basic Concepts</h2>
+
+	<p>
+		There are four types of elements within the Media Collection Database:
+		<a href="#authors">authors</a>, <a href="#titles">titles</a>, <a
+			href="#volumes">volumes</a>, and <a href="#borrowers">borrowers</a>.
+	</p>
+
+	<h3 id="authors">Authors</h3>
+
+	<p>An author is a creator of a title. A title can have more than
+		one author. A title can have no authors, but that is usually only the
+		case when you are first entering the title information.</p>
+
+	<p>When entering a new work by a new author, enter and save the
+		author's information first. Then enter the title and add the author to
+		it.</p>
+
+	<h3 id="titles">Titles</h3>
+
+	<p>Titles are the core elements of the Media Collection Database. A
+		title is any element you wish to store, e.g. a story, a poem, a song,
+		or a collection of elements, e.g. a poetry collection, a fiction
+		anthology, a CD, etc.</p>
+
+	<p>When entering a collection, such as a poetry collection, a short
+		story collection, or a CD or album, enter the collection first, then
+		enter the poem, story, or song and add it to the collection.</p>
+
+
+	<h3 id="volumes">Volumes</h3>
+
+	<p>Volumes are physical entities. (For the purposes of the
+		application, a Kindle book or an mp3 file is a physical entity.) A
+		volume is something you can purchase, loan to someone, and/or hold in
+		your hand.</p>
+
+	<p>Volumes are a somewhat confusing concept, but essentially, a
+		volume only exists as a concept to contain a title that can be
+		purchased, loaned, etc. You generally cannot loan one poem in a
+		collection to someone else. A volume is created to track the physical
+		characteristics of a book, say, such as its binding type (paper,
+		hardcover), its ISBN, its publication date, etc.</p>
+
+	<p>When entering a new book or CD, create the title first, then add
+		the volume.</p>
+
+
+	<h3 id="borrowers">Borrowers</h3>
+
+	<p>A borrower is someone who has at some point borrowed a volume in
+		the collection.</p>
+
+	<p>When someone borrows a volume for the first time, enter the
+		borrower, then check out the book to them. When they return the volume
+		there is no need to delete the borrower. Just check the volume back
+		in. The borrower may borrow another volume in the future.</p>
+
+	<h2 id="initialSetup">Initial Setup</h2>
+
+	<p>Copy the application to your application folder.</p>
+
+	<p>
+		In your home folder:<br /> Windows:
+		<code>C:\Users\username</code>
+		<br /> Mac or Linux:
+		<code>/Users/username</code>
+		<br /> create a folder called
+		<code>.mediacollectiondatabase</code>
+		and unzip the base database (
+		<code>db.zip</code>
+		) into it.
+	</p>
+	<p>Lounch the application by double-clicking it. (Media Collection
+		Database.app on the Mac, books.jar on Windows and Linux.)</p>
+</body>
+</html>

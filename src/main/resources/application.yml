@@ -2,7 +2,7 @@
 spring:
   datasource:
     url: jdbc:derby:${user.home}/.mediacollectiondatabase/db;create=true
-    initialize: false
+    initialization-mode: never
     platform: derby
     driverClassName: org.apache.derby.jdbc.EmbeddedDriver
 ---
@@ -10,8 +10,8 @@ spring:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
-      database-platform: org.hibernate.dialect.DerbyDialect
+      ddl-auto: validate
+      # database-platform: org.hibernate.dialect.DerbyDialect
     properties:
       hibernate:
         default_schema: APP
