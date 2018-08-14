@@ -1,11 +1,14 @@
 <html>
+<head>
+</head>
 <body style="font-family: Arial, Helvetica, San-serif">
 	<h1>Media Collection Database</h1>
 
 	<p>
-		The Media Collection Database is a simple application that maintains a
-		linked set of <a href="#authors">authors</a>, <a href="#titles">titles</a>,
-		<a href="#volumes">volumes</a>, and <a href="#borrowers">borrowers</a>.
+		The Media Collection Database (MCDB) is a simple application that
+		maintains a linked set of <a href="#authors">authors</a>, <a
+			href="#titles">titles</a>, <a href="#volumes">volumes</a>, and <a
+			href="#borrowers">borrowers</a>.
 	</p>
 
 	<h2>Contents</h2>
@@ -17,6 +20,7 @@
 				<li><a href="#volumes">Volumes</a></li>
 				<li><a href="#borrowers">Borrowers</a></li>
 			</ul></li>
+		<li><a href="#commonActions">Common Actions</a></li>
 		<li><a href="#initialSetup">Initial Setup</a></li>
 	</ul>
 
@@ -28,15 +32,59 @@
 			href="#volumes">volumes</a>, and <a href="#borrowers">borrowers</a>.
 	</p>
 
+	<p>If the current element being displayed is empty or unchanged,
+		you can click on the Author, Title, Volume, or Borrower button or the
+		menu item to view elements of that type.</p>
+
+	<p>The "Browse" button allows searching within the type of element
+		currently being displayed, e.g. on the Authors display the "Browse"
+		button will browse authors.</p>
+
+	<p>
+		<img src="browse-authors.png" />
+	</p>
+
+	<p>The "Search" box at the top right allows full text searching of
+		all entries.</p>
+
+	<p>
+		<img src="search.png" />
+	</p>
+
+	<p>Right-clicking in a display field will bring up a context menu
+		for that field. The context menu actions are also available in the
+		menu.</p>
+
+	<p>
+		<img src="context-menu.png" />
+	</p>
+
+	<p>Double-clicking on a line in a display field, such as an author,
+		title, volume, or borrower will take you to that element. This action
+		is also available in the menu.</p>
+
+	<p>The back, forward, and home buttons can be used to navigate
+		through your link history.</p>
+
+	<p>
+		<img src="nav-buttons.png" />
+	</p>
+
+
 	<h3 id="authors">Authors</h3>
 
 	<p>An author is a creator of a title. A title can have more than
 		one author. A title can have no authors, but that is usually only the
 		case when you are first entering the title information.</p>
 
-	<p>When entering a new work by a new author, enter and save the
+	<p>When entering a work by a new author, enter and save the
 		author's information first. Then enter the title and add the author to
 		it.</p>
+
+	<p>
+		<img src="author-page.png" />
+	</p>
+
 
 	<h3 id="titles">Titles</h3>
 
@@ -48,6 +96,10 @@
 	<p>When entering a collection, such as a poetry collection, a short
 		story collection, or a CD or album, enter the collection first, then
 		enter the poem, story, or song and add it to the collection.</p>
+
+	<p>
+		<img src="title-page.png" />
+	</p>
 
 
 	<h3 id="volumes">Volumes</h3>
@@ -67,6 +119,10 @@
 	<p>When entering a new book or CD, create the title first, then add
 		the volume.</p>
 
+	<p>
+		<img src="volume-page.png" />
+	</p>
+
 
 	<h3 id="borrowers">Borrowers</h3>
 
@@ -78,22 +134,53 @@
 		there is no need to delete the borrower. Just check the volume back
 		in. The borrower may borrow another volume in the future.</p>
 
+	<p>
+		<img src="volume-page.png" />
+	</p>
+
+
+	<h2 id="commonActions">Common Actions</h2>
+
+	<p>When entering a work by a new author, enter and save the
+		author's information first. Then enter the title and add the author to
+		it.</p>
+
+	<p>When entering a collection, such as a poetry collection, a short
+		story collection, or a CD or album, enter the collection first, then
+		enter the poem, story, or song and add it to the collection.</p>
+
+	<p>When entering a new book or CD, create the title first, then add
+		the volume.</p>
+
+	<p>When someone borrows a volume for the first time, enter the
+		borrower, then check out the book to them. When they return the volume
+		there is no need to delete the borrower. Just check the volume back
+		in. The borrower may borrow another volume in the future.</p>
+
+
 	<h2 id="initialSetup">Initial Setup</h2>
 
-	<p>Copy the application to your application folder.</p>
+	<p>Download the application to your computer.</p>
+	<table>
+		<tr>
+			<td style="text-align: right">Windows:&nbsp;</td>
+			<td><code>mcdb.jar</code></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">Linux:&nbsp;</td>
+			<td><code>mcdb.jar</code></td>
+		</tr>
+		<tr>
+			<td style="text-align: right">Mac:&nbsp;</td>
+			<td><code>mcdb.dmg</code></td>
+		</tr>
+	</table>
 
-	<p>
-		In your home folder:<br /> Windows:
-		<code>C:\Users\username</code>
-		<br /> Mac or Linux:
-		<code>/Users/username</code>
-		<br /> create a folder called
-		<code>.mediacollectiondatabase</code>
-		and unzip the base database (
-		<code>db.zip</code>
-		) into it.
-	</p>
-	<p>Launch the application by double-clicking it. (Media Collection
-		Database.app on the Mac, books.jar on Windows and Linux.)</p>
+	<p>Copy the application to your application folder. Make a shortcut
+		if desired.</p>
+
+	<p>Launch the application by double-clicking it. (mcdb.app on the
+		Mac, mcdb.jar on Windows and Linux.)</p>
+
 </body>
 </html>
