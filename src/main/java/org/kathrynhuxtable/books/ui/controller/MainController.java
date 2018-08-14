@@ -198,6 +198,7 @@ public class MainController {
 		}
 
 		// Wire Help Menu
+		buttonHelp.setOnAction(event -> showHelpDialog(buttonHome.getScene().getWindow()));
 		menuHelpHelp.setOnAction(event -> showHelpDialog(buttonHome.getScene().getWindow()));
 		menuHelpAbout.setOnAction(event -> showAboutDialog(buttonHome.getScene().getWindow()));
 
