@@ -15,6 +15,7 @@
  */
 package org.kathrynhuxtable.books;
 
+import java.io.File;
 import java.util.Locale;
 
 import org.kathrynhuxtable.books.ui.control.MainBooksPane;
@@ -66,6 +67,11 @@ public class BooksApplication extends Application {
 	public void init() throws Exception {
 		springContext = SpringApplication.run(BooksApplication.class);
 
+		YAMLConfig myConfig = springContext.getBean(YAMLConfig.class);
+
+		if (!new File(myConfig.getHelpDestination()).exists()) {
+			new HelpExtractor().extract("/help.zip", myConfig.getDataDirectory());
+		}
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
 		fxmlLoader.setControllerFactory(springContext::getBean);
 		fxmlLoader.setResources(new MessageSourceResourceBundle(springContext.getBean(MessageSource.class), Locale.getDefault()));

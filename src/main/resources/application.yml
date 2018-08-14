@@ -32,4 +32,6 @@ logging:
   file: ${user.home}/.mcdb/mcdb.log
 ---
 mcdb:
-  help-location: file://${user.home}/.mcdb/help/mcdb.html
+  data-directory: ${user.home}/.mcdb
+  help-destination: ${user.home}/.mcdb/help
+  help-url: file://${user.home}/.mcdb/help/mcdb.html

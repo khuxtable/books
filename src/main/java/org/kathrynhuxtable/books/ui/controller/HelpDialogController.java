@@ -43,6 +43,6 @@ public class HelpDialogController {
 
 	public void initialize() {
 		final WebEngine webEngine = helpWebView.getEngine();
-		webEngine.load(myConfig.getHelpLocation());
+		webEngine.load(myConfig.getHelpUrl());
 	}
 }
