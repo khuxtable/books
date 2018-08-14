@@ -15,10 +15,8 @@
  */
 package org.kathrynhuxtable.books.ui.controller;
 
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
-
+import org.kathrynhuxtable.books.YAMLConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXML;
@@ -28,6 +26,9 @@ import javafx.scene.web.WebView;
 
 @Component
 public class HelpDialogController {
+
+	@Autowired
+	private YAMLConfig myConfig;
 
 	@FXML
 	private WebView helpWebView;
@@ -41,15 +42,7 @@ public class HelpDialogController {
 	}
 
 	public void initialize() {
-		String helpText = null;
-		try (InputStream stream = getClass().getResourceAsStream("/help/mcdb.html")) {
-			try (Scanner scanner = new Scanner(stream, StandardCharsets.UTF_8.name())) {
-				helpText = scanner.useDelimiter("\\A").next();
-			}
-		} catch (Exception e) {
-			helpText = "Error reading help: " + e.getMessage();
-		}
 		final WebEngine webEngine = helpWebView.getEngine();
-		webEngine.loadContent(helpText);
+		webEngine.load(myConfig.getHelpLocation());
 	}
 }
