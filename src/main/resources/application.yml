@@ -1,7 +1,7 @@
 # Database settings
 spring:
   datasource:
-    url: jdbc:derby:${user.home}/.mediacollectiondatabase/db;create=true
+    url: jdbc:derby:${user.home}/.mcdb/db;create=true
     initialization-mode: never
     platform: derby
     driverClassName: org.apache.derby.jdbc.EmbeddedDriver
@@ -10,7 +10,7 @@ spring:
 spring:
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
       # database-platform: org.hibernate.dialect.DerbyDialect
     properties:
       hibernate:
@@ -19,7 +19,7 @@ spring:
         search:
           default:
             directory_provider: filesystem
-            indexBase: ${user.home}/.mediacollectiondatabase/index
+            indexBase: ${user.home}/.mcdb/index
 ---
 logging:
   level:
@@ -29,4 +29,4 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file: ${user.home}/.mediacollectiondatabase/mcdb.log
+  file: ${user.home}/.mcdb/mcdb.log

@@ -11,7 +11,7 @@
 	</properties>
 
 	<build>
-		<finalName>books</finalName>
+		<finalName>mcdb</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -101,10 +101,11 @@
 						<artifactId>appbundle-maven-plugin</artifactId>
 						<version>1.2.1-SNAPSHOT</version>
 						<configuration>
-							<bundleName>Media Collection Database</bundleName>
+							<bundleName>mcdb</bundleName>
 							<mainClass>org.springframework.boot.loader.JarLauncher</mainClass>
 							<iconFile>mediaCollection.icns</iconFile>
 							<jvmVersion>1.8</jvmVersion>
+							<generateDiskImageFile>true</generateDiskImageFile>
 						</configuration>
 						<executions>
 							<execution>
