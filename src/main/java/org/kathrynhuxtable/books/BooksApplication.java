@@ -16,6 +16,10 @@
 package org.kathrynhuxtable.books;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 import org.kathrynhuxtable.books.ui.control.MainBooksPane;
@@ -67,15 +71,34 @@ public class BooksApplication extends Application {
 	public void init() throws Exception {
 		springContext = SpringApplication.run(BooksApplication.class);
 
-		YAMLConfig myConfig = springContext.getBean(YAMLConfig.class);
+		// Create initial files in app directory.
+		initializeFiles();
 
-		if (!new File(myConfig.getHelpDestination()).exists()) {
-			new HelpExtractor().extract("/help.zip", myConfig.getDataDirectory());
-		}
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
 		fxmlLoader.setControllerFactory(springContext::getBean);
 		fxmlLoader.setResources(new MessageSourceResourceBundle(springContext.getBean(MessageSource.class), Locale.getDefault()));
 		root = fxmlLoader.load();
+	}
+
+	private void initializeFiles() throws IOException {
+		YAMLConfig myConfig = springContext.getBean(YAMLConfig.class);
+
+		// Unpack help.zip
+		if (!new File(myConfig.getHelpDestination()).exists()) {
+			new HelpExtractor().extract("/help.zip", myConfig.getDataDirectory());
+		}
+
+		// Copy forms.txt
+		Path path = Paths.get(myConfig.getFormFile());
+		if (Files.notExists(path)) {
+			Files.copy(getClass().getResourceAsStream("/forms.txt"), path);
+		}
+
+		// Copy categories.txt
+		path = Paths.get(myConfig.getCategoryFile());
+		if (Files.notExists(path)) {
+			Files.copy(getClass().getResourceAsStream("/categories.txt"), path);
+		}
 	}
 
 	@Override

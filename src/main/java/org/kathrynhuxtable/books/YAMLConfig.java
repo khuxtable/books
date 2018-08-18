@@ -33,6 +33,12 @@ public class YAMLConfig {
 	@Value("${mcdb.help-url}")
 	private String helpUrl;
 
+	@Value("${mcdb.form-file}")
+	private String formFile;
+
+	@Value("${mcdb.category-file}")
+	private String categoryFile;
+
 	public String getDataDirectory() {
 		return dataDirectory;
 	}
@@ -55,6 +61,22 @@ public class YAMLConfig {
 
 	public void setHelpUrl(String helpUrl) {
 		this.helpUrl = helpUrl;
+	}
+
+	public String getFormFile() {
+		return formFile;
+	}
+
+	public void setFormFile(String formFile) {
+		this.formFile = formFile;
+	}
+
+	public String getCategoryFile() {
+		return categoryFile;
+	}
+
+	public void setCategoryFile(String categoryFile) {
+		this.categoryFile = categoryFile;
 	}
 
 }

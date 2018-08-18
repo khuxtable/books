@@ -35,3 +35,5 @@ mcdb:
   data-directory: ${user.home}/.mcdb
   help-destination: ${user.home}/.mcdb/help
   help-url: file://${user.home}/.mcdb/help/mcdb.html
+  form-file: ${user.home}/.mcdb/forms.txt
+  category-file: ${user.home}/.mcdb/categories.txt

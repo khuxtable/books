@@ -72,54 +72,10 @@
 						</ListView>
 
 						<Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-						<ComboBox fx:id="category" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
-							<items>
-								<FXCollections fx:factory="observableArrayList">
-									<String fx:value="Classical Music" />
-									<String fx:value="Fantasy" />
-									<String fx:value="Joke" />
-									<String fx:value="Literature" />
-									<String fx:value="Magazine" />
-									<String fx:value="Philosophy" />
-									<String fx:value="Poetry" />
-									<String fx:value="Popular Music" />
-									<String fx:value="Science" />
-									<String fx:value="Science Fantasy" />
-									<String fx:value="Science Fiction" />
-								</FXCollections>
-							</items>
-						</ComboBox>
+						<ComboBox fx:id="category" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
 						<Label text="Form:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-						<ComboBox fx:id="form" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
-							<items>
-								<FXCollections fx:factory="observableArrayList">
-									<String fx:value="Album" />
-									<String fx:value="Anthology" />
-									<String fx:value="Art" />
-									<String fx:value="Collection" />
-									<String fx:value="Essay" />
-									<String fx:value="Excerpt" />
-									<String fx:value="Graphic Novel" />
-									<String fx:value="Guide" />
-									<String fx:value="Joke" />
-									<String fx:value="Map" />
-									<String fx:value="Movie Outline" />
-									<String fx:value="Music" />
-									<String fx:value="Myth" />
-									<String fx:value="Novel" />
-									<String fx:value="Novel Section" />
-									<String fx:value="Novelette" />
-									<String fx:value="Novella" />
-									<String fx:value="Poem" />
-									<String fx:value="Screenplay" />
-									<String fx:value="Series" />
-									<String fx:value="Short Story" />
-									<String fx:value="Song" />
-									<String fx:value="Speech" />
-								</FXCollections>
-							</items>
-						</ComboBox>
+						<ComboBox fx:id="form" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
 						<Label text="Published:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
 						<GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">

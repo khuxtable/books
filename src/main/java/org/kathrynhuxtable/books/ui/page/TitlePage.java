@@ -34,6 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeSet;
 
+import org.kathrynhuxtable.books.ComboSource;
 import org.kathrynhuxtable.books.persistence.domain.Author;
 import org.kathrynhuxtable.books.persistence.domain.DomainObject;
 import org.kathrynhuxtable.books.persistence.domain.Title;
@@ -41,9 +42,11 @@ import org.kathrynhuxtable.books.persistence.domain.Volume;
 import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName;
 import org.kathrynhuxtable.books.ui.util.NullCallback;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -54,6 +57,9 @@ import javafx.scene.control.TextField;
 
 @Component
 public class TitlePage extends AbstractPage {
+	
+	@Autowired
+	private ComboSource comboSource;
 
 	@FXML
 	private TextField title;
@@ -116,6 +122,9 @@ public class TitlePage extends AbstractPage {
 		addDoubleClickActionListener(volumes);
 		addDoubleClickActionListener(contents);
 		addDoubleClickActionListener(collectedIn);
+		
+		category.setItems(FXCollections.observableList(comboSource.getForms()));
+		form.setItems(FXCollections.observableList(comboSource.getCategories()));
 	}
 
 	@Override
