@@ -111,6 +111,7 @@
 							<iconFile>mediaCollection.icns</iconFile>
 							<jvmVersion>1.8</jvmVersion>
 							<generateDiskImageFile>true</generateDiskImageFile>
+							<excludeDependencies>true</excludeDependencies>
 						</configuration>
 						<executions>
 							<execution>
