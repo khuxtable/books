@@ -218,6 +218,7 @@ public class TitlePage extends AbstractPage {
 		}
 
 		titleObj = null;
+		setId(null);
 	}
 
 	@Override

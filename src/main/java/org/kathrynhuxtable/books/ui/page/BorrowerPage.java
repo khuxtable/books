@@ -121,6 +121,7 @@ public class BorrowerPage extends AbstractPage {
 			booksService.delete(borrower);
 		}
 		borrower = null;
+		setId(null);
 	}
 
 	@Override

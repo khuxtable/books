@@ -111,7 +111,7 @@ public class AuthorPage extends AbstractPage {
 			deathDate.setValue(null);
 			note.setText("");
 
-			titles.getItems().clear();
+			titles.setItems(FXCollections.observableArrayList());
 		}
 	}
 
@@ -145,6 +145,7 @@ public class AuthorPage extends AbstractPage {
 			booksService.delete(author);
 		}
 		author = null;
+		setId(null);
 	}
 
 	@Override

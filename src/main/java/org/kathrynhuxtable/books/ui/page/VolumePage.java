@@ -177,6 +177,7 @@ public class VolumePage extends AbstractPage {
 			booksService.delete(volume);
 		}
 		volume = null;
+		setId(null);
 	}
 
 	@Override
