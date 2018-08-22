@@ -105,7 +105,10 @@ public class SearchPopover extends Popover {
 					SearchResult selectedItem = searchResultPopoverList.getSelectionModel().getSelectedItem();
 					if (selectedItem != null)
 						searchResultPopoverList.itemClicked(selectedItem);
-				}
+				} 
+			} else if (t.getCode() == KeyCode.ESCAPE) {
+				hide();
+				searchBox.setText("");
 			}
 		});
 		searchResultPopoverList = new SearchResultPopoverList(pageBrowser);
@@ -173,5 +176,11 @@ public class SearchPopover extends Popover {
 		}
 		clearPages();
 		pushPage(searchResultPopoverList);
+	}
+	
+	@Override
+	public void hide() {
+		super.hide();
+		searchBox.setText("");
 	}
 }

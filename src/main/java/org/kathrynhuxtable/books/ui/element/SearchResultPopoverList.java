@@ -62,7 +62,7 @@ import javafx.scene.shape.Rectangle;
  * Popover page that displays a list of search results.
  */
 public class SearchResultPopoverList extends PopoverTreeList<SearchResult> implements Popover.Page {
-	private Popover popover;
+	private SearchPopover popover;
 	private PageBrowserController pageBrowser;
 	private Rectangle leftLine = new Rectangle(0, 0, 1, 1);
 	private IconPane iconPane = new IconPane();
@@ -101,7 +101,7 @@ public class SearchResultPopoverList extends PopoverTreeList<SearchResult> imple
 
 	@Override
 	public void setPopover(Popover popover) {
-		this.popover = popover;
+		this.popover = (SearchPopover) popover;
 	}
 
 	@Override
