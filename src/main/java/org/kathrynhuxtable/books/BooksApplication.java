@@ -33,6 +33,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -108,6 +109,9 @@ public class BooksApplication extends Application {
 		scene = new Scene(root, 1024, 768, Color.web("#f4f4f4"));
 		if (IS_EMBEDDED || IS_ANDROID) {
 			new ScrollEventSynthesizer(scene);
+		}
+		if (!IS_MAC) {
+			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
 		}
 		stage.setScene(scene);
 		// START FULL SCREEN IF WANTED

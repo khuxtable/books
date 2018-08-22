@@ -40,6 +40,9 @@ public class BooksAppPreloader extends Preloader {
 	public void start(Stage stage) throws Exception {
 		splashScreen = stage;
 		splashScreen.initStyle(StageStyle.UNDECORATED);
+		if (!BooksApplication.IS_MAC) {
+			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
+		}
 		splashScreen.setScene(createScene());
 		splashScreen.show();
 	}
