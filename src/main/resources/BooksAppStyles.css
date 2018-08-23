@@ -40,14 +40,23 @@
 }
 .search-result-cell:selected {
     -fx-background-insets: 0.0, 0.0 0.0 0.0 40.0;
+    -fx-background-color: #039ED3;
 }
 .search-result-cell .title {
     -fx-font-size: 15.0px;
     -fx-text-fill: #363636;
 }
+.search-result-cell:selected .title {
+    -fx-font-size: 15.0px;
+    -fx-text-fill: white;
+}
 .search-result-cell .details {
     -fx-font-size: 13.0px;
     -fx-text-fill: #444444;
+}
+.search-result-cell:selected .details {
+    -fx-font-size: 13.0px;
+    -fx-text-fill: white;
 }
 .search-icon-pane .label {
     -fx-font-family: "Source Sans Pro Semibold";
