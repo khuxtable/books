@@ -4,7 +4,7 @@
 
 	<groupId>org.kathrynhuxtable.books</groupId>
 	<artifactId>books</artifactId>
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<name>Media Collection Database</name>
 	<description>
 		The Media Collection Database (MCDB) is a simple application that
