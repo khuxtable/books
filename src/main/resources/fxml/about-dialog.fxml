@@ -29,6 +29,8 @@
 		<VBox spacing="5.0">
 			<children>
 				<Label text="Simple linked database for books, CDs, DVDs, etc." />
+				<Label text="Version ${project.version}" />
+				<Label text="Built: ${timestamp}" />
 				<Label text=" " />
 				<Label text="Developed by Kathryn Huxtable" />
 				<Label text="https://github.com/khuxtable/books" />
