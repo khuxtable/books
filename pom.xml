@@ -137,7 +137,6 @@
 						<configuration>
 							<bundleName>mcdb</bundleName>
 							<mainClass>org.springframework.boot.loader.JarLauncher</mainClass>
-							<jrePath>/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk</jrePath>
 							<iconFile>mediaCollection.icns</iconFile>
 							<jvmVersion>1.8</jvmVersion>
 							<generateDiskImageFile>true</generateDiskImageFile>
