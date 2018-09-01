@@ -137,7 +137,7 @@
 						<configuration>
 							<bundleName>mcdb</bundleName>
 							<mainClass>org.springframework.boot.loader.JarLauncher</mainClass>
-							<iconFile>mediaCollection.icns</iconFile>
+							<iconFile>mcdb.icns</iconFile>
 							<jvmVersion>1.8</jvmVersion>
 							<generateDiskImageFile>true</generateDiskImageFile>
 							<excludeDependencies>true</excludeDependencies>
