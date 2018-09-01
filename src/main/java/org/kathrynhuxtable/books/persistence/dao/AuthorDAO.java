@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kathrynhuxtable.books.persistence.domain.Author;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -43,16 +44,18 @@ public interface AuthorDAO extends CrudRepository<Author, Long> {
 	}
 
 	default List<Author> findByName(String lastName, String firstName, boolean fetchFields) {
+		Sort sort = Sort.by(new Sort.Order(Sort.Direction.ASC, "lastName").ignoreCase(), new Sort.Order(Sort.Direction.ASC, "firstName").ignoreCase());
+
 		List<Author> result = null;
 		if (firstName != null && !firstName.isEmpty() && lastName != null && !lastName.isEmpty()) {
-			result = findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(lastName, firstName);
+			result = findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCase(lastName, firstName, sort);
 		} else if (lastName != null && !lastName.isEmpty()) {
-			result = findByLastNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(lastName);
+			result = findByLastNameStartingWithAllIgnoreCase(lastName, sort);
 		} else if (firstName != null && !firstName.isEmpty()) {
-			result = findByFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(firstName);
+			result = findByFirstNameStartingWithAllIgnoreCase(firstName, sort);
 		} else {
 			result = new ArrayList<>();
-			findAll().forEach(result::add);
+			result = findByLastNameStartingWithAllIgnoreCase("", sort);
 		}
 
 		if (fetchFields) {
@@ -62,10 +65,10 @@ public interface AuthorDAO extends CrudRepository<Author, Long> {
 		return result;
 	}
 
-	List<Author> findByLastNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(String lastName);
+	List<Author> findByLastNameStartingWithAllIgnoreCase(String lastName, Sort sort);
 
-	List<Author> findByFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(String lastName);
+	List<Author> findByFirstNameStartingWithAllIgnoreCase(String lastName, Sort sort);
 
-	List<Author> findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(String lastName, String firstName);
+	List<Author> findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCase(String lastName, String firstName, Sort sort);
 
 }

@@ -63,7 +63,7 @@ public class BooksService {
 	}
 
 	public List<Title> findTitleByName(String title) {
-		return titleDao.findByTitleContainsIgnoreCaseOrderByTitleAsc(title);
+		return titleDao.findByTitle(title);
 	}
 
 	public Optional<Volume> getVolumeById(Long id) {
@@ -71,7 +71,7 @@ public class BooksService {
 	}
 
 	public List<Volume> findVolumeByName(String title) {
-		return volumeDao.findByTitle(title, true, false);
+		return volumeDao.findByTitle(title, false);
 	}
 
 	public Optional<Borrower> getBorrowerById(Long id) {

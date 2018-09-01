@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.kathrynhuxtable.books.persistence.domain.Borrower;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -43,13 +44,15 @@ public interface BorrowerDAO extends CrudRepository<Borrower, Long> {
 	}
 
 	default List<Borrower> findByName(String lastName, String firstName, boolean fetchFields) {
+		Sort sort = Sort.by(new Sort.Order(Sort.Direction.ASC, "lastName").ignoreCase(), new Sort.Order(Sort.Direction.ASC, "firstName").ignoreCase());
+
 		List<Borrower> result = null;
 		if (firstName != null && !firstName.isEmpty() && lastName != null && !lastName.isEmpty()) {
-			result = findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(lastName, firstName);
+			result = findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCase(lastName, firstName, sort);
 		} else if (lastName != null && !lastName.isEmpty()) {
-			result = findByLastNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(lastName);
+			result = findByLastNameStartingWithAllIgnoreCase(lastName, sort);
 		} else if (firstName != null && !firstName.isEmpty()) {
-			result = findByFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(firstName);
+			result = findByFirstNameStartingWithAllIgnoreCase(firstName, sort);
 		} else {
 			result = new ArrayList<>();
 			findAll().forEach(result::add);
@@ -62,10 +65,10 @@ public interface BorrowerDAO extends CrudRepository<Borrower, Long> {
 		return result;
 	}
 
-	List<Borrower> findByLastNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(String lastName);
+	List<Borrower> findByLastNameStartingWithAllIgnoreCase(String lastName, Sort sort);
 
-	List<Borrower> findByFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(String lastName);
+	List<Borrower> findByFirstNameStartingWithAllIgnoreCase(String lastName, Sort sort);
 
-	List<Borrower> findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCaseOrderByLastNameAscFirstNameAsc(String lastName, String firstName);
+	List<Borrower> findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCase(String lastName, String firstName, Sort sort);
 
 }

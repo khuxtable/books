@@ -15,26 +15,25 @@
  */
 package org.kathrynhuxtable.books.persistence.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.kathrynhuxtable.books.persistence.domain.Volume;
+import org.kathrynhuxtable.books.service.TitlePropertyComparator;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VolumeDAO extends CrudRepository<Volume, Long> {
 
-	default List<Volume> findByTitle(String title, boolean wildFlag, boolean fetchFields) {
+	default List<Volume> findByTitle(String title, boolean fetchFields) {
 		if (title == null) {
 			title = "";
 		}
 
 		List<Volume> result;
-		if (wildFlag) {
-			result = findByEntryTitleContainsIgnoreCaseOrderByEntryTitleAsc(title);
-		} else {
-			result = findByEntryTitleIgnoreCaseOrderByEntryTitleAsc(title);
-		}
+		result = findByEntryTitleContainsIgnoreCase(title);
+		Collections.sort(result, new TitlePropertyComparator.VolumeComparator());
 
 		if (fetchFields) {
 			result.stream().forEach(volume -> volume.getEntry());
@@ -43,8 +42,6 @@ public interface VolumeDAO extends CrudRepository<Volume, Long> {
 		return result;
 	}
 
-	List<Volume> findByEntryTitleIgnoreCaseOrderByEntryTitleAsc(String title);
-
-	List<Volume> findByEntryTitleContainsIgnoreCaseOrderByEntryTitleAsc(String title);
+	List<Volume> findByEntryTitleContainsIgnoreCase(String title);
 
 }
