@@ -15,7 +15,9 @@
  */
 package org.kathrynhuxtable.books;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,7 +58,12 @@ public class AppResource {
 
 	public AudioClip getAlertSound() {
 		if (alertSound == null) {
-			alertSound = new AudioClip("file://" + myConfig.getAlertFile());
+			try {
+				alertSound = new AudioClip(new  File(myConfig.getAlertFile()).toURI().toURL().toString());
+			} catch (MalformedURLException e) {
+				// Shouldn't happen.
+				e.printStackTrace();
+			}
 		}
 
 		return alertSound;
