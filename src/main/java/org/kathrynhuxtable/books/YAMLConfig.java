@@ -24,6 +24,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class YAMLConfig {
 
+	@Value("${mcdb.app-name}")
+	private String appName;
+
 	@Value("${mcdb.data-directory}")
 	private String dataDirectory;
 
@@ -41,6 +44,14 @@ public class YAMLConfig {
 
 	@Value("${mcdb.alert-file}")
 	private String alertFile;
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 
 	public String getDataDirectory() {
 		return dataDirectory;

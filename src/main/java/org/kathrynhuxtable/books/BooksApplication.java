@@ -23,20 +23,27 @@ import java.nio.file.Paths;
 import java.util.Locale;
 
 import org.kathrynhuxtable.books.ui.control.MainBooksPane;
+import org.kathrynhuxtable.books.ui.controller.MainController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceResourceBundle;
 
+import de.codecentric.centerdevice.MenuToolkit;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Main entry point for the Spring Boot application.
@@ -105,7 +112,7 @@ public class BooksApplication extends Application {
 		if (Files.notExists(path)) {
 			Files.copy(getClass().getResourceAsStream("/resources/categories.txt"), path);
 		}
-		
+
 		// Copy Alert.mp3
 		path = Paths.get(myConfig.getAlertFile());
 		if (Files.notExists(path)) {
@@ -122,9 +129,30 @@ public class BooksApplication extends Application {
 		if (IS_EMBEDDED || IS_ANDROID) {
 			new ScrollEventSynthesizer(scene);
 		}
-		if (!IS_MAC) {
+		if (IS_MAC) {
+			String appName = springContext.getBean(YAMLConfig.class).getAppName();
+
+			MenuToolkit tk = MenuToolkit.toolkit();
+			tk.setForceQuitOnCmdQ(false);
+
+			Menu appMenu = new Menu();
+			MenuItem aboutItem = new MenuItem("About " + appName);
+			aboutItem.setOnAction(event -> springContext.getBean(MainController.class).showAboutDialog());
+			appMenu.getItems().addAll(aboutItem, new SeparatorMenuItem(), new SeparatorMenuItem(), tk.createHideMenuItem(appName),
+					tk.createHideOthersMenuItem(), tk.createUnhideAllMenuItem(), new SeparatorMenuItem(), tk.createQuitMenuItem(appName));
+			tk.setApplicationMenu(appMenu);
+		} else {
 			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
 		}
+
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent ev) {
+				MainController mainController = springContext.getBean(MainController.class);
+				mainController.doExit();
+				ev.consume();
+			}
+		});
+
 		stage.setScene(scene);
 		// START FULL SCREEN IF WANTED
 		if (START_FULL_SCREEN) {
@@ -140,6 +168,10 @@ public class BooksApplication extends Application {
 
 	@Override
 	public void stop() throws Exception {
+		exitApplication();
+	}
+
+	private void exitApplication() {
 		springContext.stop();
 		System.exit(0);
 	}

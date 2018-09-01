@@ -31,14 +31,7 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
-				<includes>
-					<include>fxml/about-dialog.fxml</include>
-				</includes>
 			</resource>
 		</resources>
 		<plugins>
@@ -62,6 +55,17 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<escapeString>\</escapeString>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>icns</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -153,6 +157,13 @@
 					</plugin>
 				</plugins>
 			</build>
+			<dependencies>
+				<dependency>
+					<groupId>de.codecentric.centerdevice</groupId>
+					<artifactId>centerdevice-nsmenufx</artifactId>
+					<version>2.1.6</version>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>

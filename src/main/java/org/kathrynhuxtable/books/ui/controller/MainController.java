@@ -194,14 +194,17 @@ public class MainController {
 		if (BooksApplication.IS_MAC) {
 			menuExit.setVisible(false);
 		} else {
-			// FIXME Not perfect. Need Cmd-Q on a Mac to activate the doExit command.
 			menuExit.setOnAction(event -> doExit());
 		}
 
 		// Wire Help Menu
-		buttonHelp.setOnAction(event -> showHelpDialog(buttonHome.getScene().getWindow()));
-		menuHelpHelp.setOnAction(event -> showHelpDialog(buttonHome.getScene().getWindow()));
-		menuHelpAbout.setOnAction(event -> showAboutDialog(buttonHome.getScene().getWindow()));
+		buttonHelp.setOnAction(event -> showHelpDialog());
+		menuHelpHelp.setOnAction(event -> showHelpDialog());
+		if (BooksApplication.IS_MAC) {
+			menuHelpAbout.setVisible(false);
+		} else {
+			menuHelpAbout.setOnAction(event -> showAboutDialog());
+		}
 
 		// Wire page goto buttons and menu items.
 		pageBrowserController.bindCommand(menuGotoAuthors, CommandName.GOTO_AUTHORS_PAGE);
@@ -287,7 +290,7 @@ public class MainController {
 		borrowersMenu.setVisible(show);
 	}
 
-	private void doExit() {
+	public void doExit() {
 		if (pageBrowserController.currentPageProperty().get().isChanged()) {
 			pageBrowserController.playAlertSound();
 			return;
@@ -296,7 +299,8 @@ public class MainController {
 		Platform.exit();
 	}
 
-	private void showAboutDialog(Window owner) {
+	public void showAboutDialog() {
+		Window owner = buttonHome.getScene().getWindow();
 		try {
 			final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/about-dialog.fxml"));
 			loader.setController(aboutDialogController);
@@ -321,7 +325,8 @@ public class MainController {
 		}
 	}
 
-	private void showHelpDialog(Window owner) {
+	private void showHelpDialog() {
+		Window owner = buttonHome.getScene().getWindow();
 		try {
 			final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/help-dialog.fxml"));
 			loader.setController(helpDialogController);

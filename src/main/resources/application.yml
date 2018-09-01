@@ -1,7 +1,7 @@
 # Database settings
 spring:
   datasource:
-    url: jdbc:derby:${user.home}/.mcdb/db;create=true
+    url: jdbc:derby:\${user.home}/.mcdb/db;create=true
     initialization-mode: never
     platform: derby
     driverClassName: org.apache.derby.jdbc.EmbeddedDriver
@@ -19,7 +19,7 @@ spring:
         search:
           default:
             directory_provider: filesystem
-            indexBase: ${user.home}/.mcdb/index
+            indexBase: \${user.home}/.mcdb/index
 ---
 logging:
   level:
@@ -29,13 +29,14 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-  file: ${user.home}/.mcdb/mcdb.log
+  file: \${user.home}/.mcdb/mcdb.log
 ---
 mcdb:
-  data-directory: ${user.home}/.mcdb
-  help-destination: ${user.home}/.mcdb/help
-  help-url: file://${user.home}/.mcdb/help/mcdb.html
-  form-file: ${user.home}/.mcdb/forms.txt
-  category-file: ${user.home}/.mcdb/categories.txt
-  alert-file: ${user.home}/.mcdb/Alert.mp3
+  app-name: ${project.build.finalName}
+  data-directory: \${user.home}/.mcdb
+  help-destination: \${user.home}/.mcdb/help
+  help-url: file://\${user.home}/.mcdb/help/mcdb.html
+  form-file: \${user.home}/.mcdb/forms.txt
+  category-file: \${user.home}/.mcdb/categories.txt
+  alert-file: \${user.home}/.mcdb/Alert.mp3
   
