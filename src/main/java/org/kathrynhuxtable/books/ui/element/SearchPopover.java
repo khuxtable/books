@@ -111,7 +111,7 @@ public class SearchPopover extends Popover {
 				searchBox.setText("");
 			}
 		});
-		searchResultPopoverList = new SearchResultPopoverList(pageBrowser);
+		searchResultPopoverList = new SearchResultPopoverList(pageBrowser, searchBox);
 		// if list gets focus then send back to search box
 		searchResultPopoverList.focusedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean t, Boolean hasFocus) -> {
 			if (hasFocus) {
@@ -181,6 +181,5 @@ public class SearchPopover extends Popover {
 	@Override
 	public void hide() {
 		super.hide();
-		searchBox.setText("");
 	}
 }

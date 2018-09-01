@@ -39,6 +39,7 @@ import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.service.SearchResult;
 import org.kathrynhuxtable.books.ui.control.Popover;
 import org.kathrynhuxtable.books.ui.control.PopoverTreeList;
+import org.kathrynhuxtable.books.ui.control.SearchBox;
 import org.kathrynhuxtable.books.ui.controller.PageBrowserController;
 
 import javafx.beans.value.ChangeListener;
@@ -64,12 +65,14 @@ import javafx.scene.shape.Rectangle;
 public class SearchResultPopoverList extends PopoverTreeList<SearchResult> implements Popover.Page {
 	private SearchPopover popover;
 	private PageBrowserController pageBrowser;
+	private SearchBox searchBox;
 	private Rectangle leftLine = new Rectangle(0, 0, 1, 1);
 	private IconPane iconPane = new IconPane();
 	private final Pane backgroundRectangle = new Pane();
 
-	public SearchResultPopoverList(PageBrowserController pageBrowser) {
+	public SearchResultPopoverList(PageBrowserController pageBrowser, SearchBox searchBox) {
 		this.pageBrowser = pageBrowser;
+		this.searchBox = searchBox;
 		leftLine.setFill(Color.web("#dfdfdf"));
 		iconPane.setManaged(false);
 		setFocusTraversable(false);
@@ -96,6 +99,7 @@ public class SearchResultPopoverList extends PopoverTreeList<SearchResult> imple
 	@Override
 	public void itemClicked(SearchResult item) {
 		popover.hide();
+		searchBox.setText("");
 		pageBrowser.goToPage(item.getDocumentType(), item.getId());
 	}
 
