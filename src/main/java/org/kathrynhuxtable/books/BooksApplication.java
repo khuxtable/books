@@ -130,17 +130,7 @@ public class BooksApplication extends Application {
 			new ScrollEventSynthesizer(scene);
 		}
 		if (IS_MAC) {
-			String appName = springContext.getBean(YAMLConfig.class).getAppName();
-
-			MenuToolkit tk = MenuToolkit.toolkit();
-			tk.setForceQuitOnCmdQ(false);
-
-			Menu appMenu = new Menu();
-			MenuItem aboutItem = new MenuItem("About " + appName);
-			aboutItem.setOnAction(event -> springContext.getBean(MainController.class).showAboutDialog());
-			appMenu.getItems().addAll(aboutItem, new SeparatorMenuItem(), new SeparatorMenuItem(), tk.createHideMenuItem(appName),
-					tk.createHideOthersMenuItem(), tk.createUnhideAllMenuItem(), new SeparatorMenuItem(), tk.createQuitMenuItem(appName));
-			tk.setApplicationMenu(appMenu);
+			makeMacAppMenu();
 		} else {
 			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
 		}
@@ -164,6 +154,20 @@ public class BooksApplication extends Application {
 		}
 		stage.setTitle("Media Collection Database");
 		stage.show();
+	}
+
+	private void makeMacAppMenu() {
+		String appName = springContext.getBean(YAMLConfig.class).getAppName();
+
+		MenuToolkit tk = MenuToolkit.toolkit();
+		tk.setForceQuitOnCmdQ(false);
+
+		Menu appMenu = new Menu();
+		MenuItem aboutItem = new MenuItem("About " + appName);
+		aboutItem.setOnAction(event -> springContext.getBean(MainController.class).showAboutDialog());
+		appMenu.getItems().addAll(aboutItem, new SeparatorMenuItem(), new SeparatorMenuItem(), tk.createHideMenuItem(appName),
+				tk.createHideOthersMenuItem(), tk.createUnhideAllMenuItem(), new SeparatorMenuItem(), tk.createQuitMenuItem(appName));
+		tk.setApplicationMenu(appMenu);
 	}
 
 	@Override

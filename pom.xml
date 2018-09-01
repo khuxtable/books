@@ -103,6 +103,11 @@
 			<version>8.0-r6</version>
 		</dependency>
 		<dependency>
+			<groupId>de.codecentric.centerdevice</groupId>
+			<artifactId>centerdevice-nsmenufx</artifactId>
+			<version>2.1.6</version>
+		</dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.197</version>
@@ -157,13 +162,6 @@
 					</plugin>
 				</plugins>
 			</build>
-			<dependencies>
-				<dependency>
-					<groupId>de.codecentric.centerdevice</groupId>
-					<artifactId>centerdevice-nsmenufx</artifactId>
-					<version>2.1.6</version>
-				</dependency>
-			</dependencies>
 		</profile>
 	</profiles>
 </project>
