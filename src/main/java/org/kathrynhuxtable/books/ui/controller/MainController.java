@@ -37,6 +37,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
@@ -310,6 +311,9 @@ public class MainController {
 					stage.close();
 				}
 			});
+			if (!BooksApplication.IS_MAC) {
+				stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
+			}
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {
@@ -332,6 +336,9 @@ public class MainController {
 					stage.close();
 				}
 			});
+			if (!BooksApplication.IS_MAC) {
+				stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
+			}
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {

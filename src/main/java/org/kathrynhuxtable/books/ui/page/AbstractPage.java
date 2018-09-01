@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.kathrynhuxtable.books.AppResource;
+import org.kathrynhuxtable.books.BooksApplication;
 import org.kathrynhuxtable.books.persistence.domain.DomainObject;
 import org.kathrynhuxtable.books.service.BooksService;
 import org.kathrynhuxtable.books.service.DocumentType;
@@ -49,6 +50,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -318,6 +320,9 @@ public abstract class AbstractPage {
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setTitle("Search " + documentType.getPluralDisplayName());
 			stage.initOwner(owner);
+			if (!BooksApplication.IS_MAC) {
+				stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
+			}
 			stage.setScene(scene);
 			stage.show();
 		} catch (IOException e) {
