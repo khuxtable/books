@@ -26,6 +26,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import java.io.IOException;
 import java.util.List;
 
+import org.kathrynhuxtable.books.AppResource;
 import org.kathrynhuxtable.books.persistence.domain.DomainObject;
 import org.kathrynhuxtable.books.service.BooksService;
 import org.kathrynhuxtable.books.service.DocumentType;
@@ -59,6 +60,9 @@ import javafx.util.Callback;
  * Base controller for showing a page.
  */
 public abstract class AbstractPage {
+
+	@Autowired
+	protected AppResource appResource;
 
 	@Autowired
 	protected BooksService booksService;
@@ -288,6 +292,7 @@ public abstract class AbstractPage {
 		listView.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2 && event.getTarget() instanceof Text) {
 				if (isChangedInternal()) {
+					appResource.getAlertSound().play();
 					return;
 				}
 				T selectedItem = listView.getSelectionModel().getSelectedItem();

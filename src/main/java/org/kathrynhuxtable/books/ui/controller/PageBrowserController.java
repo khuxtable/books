@@ -51,7 +51,7 @@ import static org.kathrynhuxtable.books.ui.controller.PageBrowserController.Comm
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.kathrynhuxtable.books.BooksApplication;
+import org.kathrynhuxtable.books.AppResource;
 import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.ui.control.Command;
 import org.kathrynhuxtable.books.ui.page.AbstractPage;
@@ -75,7 +75,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.AudioClip;
 
 /**
  * Page navigation with history.
@@ -85,6 +84,8 @@ public class PageBrowserController {
 
 	Logger LOG = LoggerFactory.getLogger(PageBrowserController.class);
 
+	@Autowired
+	private AppResource appResource;
 	@Autowired
 	private MainController mainController;
 	@Autowired
@@ -113,8 +114,6 @@ public class PageBrowserController {
 	private StringProperty currentPageTitle = new SimpleStringProperty(null);
 	private ObjectProperty<DocumentType> documentTypeProperty = new SimpleObjectProperty<>();
 	private ObjectProperty<AbstractPage> currentPageProperty = new SimpleObjectProperty<>();
-
-	private AudioClip alertSound;
 
 	private Map<CommandName, Command> commandMap = buildCommandMap();
 
@@ -191,20 +190,8 @@ public class PageBrowserController {
 		goToPage(DocumentType.VOLUME, 0L);
 	}
 
-	private AudioClip getAlertSound() {
-		if (alertSound == null) {
-			if (BooksApplication.IS_MAC) {
-				alertSound = new AudioClip("file:///System/Library/Sounds/Basso.aiff");
-			} else {
-				alertSound = new AudioClip("file:///C:/WINDOWS/media/Windows%20Ding.WAV");
-			}
-		}
-
-		return alertSound;
-	}
-
 	public void playAlertSound() {
-		getAlertSound().play();
+		appResource.getAlertSound().play();
 	}
 
 	private void doHome() {

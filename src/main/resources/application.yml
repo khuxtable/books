@@ -37,3 +37,5 @@ mcdb:
   help-url: file://${user.home}/.mcdb/help/mcdb.html
   form-file: ${user.home}/.mcdb/forms.txt
   category-file: ${user.home}/.mcdb/categories.txt
+  alert-file: ${user.home}/.mcdb/Alert.mp3
+  

@@ -25,17 +25,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javafx.scene.media.AudioClip;
+
 /**
- * Deliver cached text to populate combo boxes.
+ * Deliver cached application resources.
  */
 @Component
-public class ComboSource {
+public class AppResource {
 
 	@Autowired
 	private YAMLConfig myConfig;
 
 	private List<String> forms;
 	private List<String> categories;
+	private AudioClip alertSound;
 
 	public List<String> getForms() {
 		if (forms == null) {
@@ -51,6 +54,22 @@ public class ComboSource {
 		return categories;
 	}
 
+	public AudioClip getAlertSound() {
+		if (alertSound == null) {
+			alertSound = new AudioClip("file://" + myConfig.getAlertFile());
+		}
+
+		return alertSound;
+	}
+
+	/**
+	 * Read a file of text values.
+	 * 
+	 * @param file
+	 *            the file.
+	 * 
+	 * @return a List of String values.
+	 */
 	private List<String> parseFile(String file) {
 		List<String> list = new ArrayList<>();
 		Path path = Paths.get(file);

@@ -39,6 +39,9 @@ public class YAMLConfig {
 	@Value("${mcdb.category-file}")
 	private String categoryFile;
 
+	@Value("${mcdb.alert-file}")
+	private String alertFile;
+
 	public String getDataDirectory() {
 		return dataDirectory;
 	}
@@ -79,4 +82,11 @@ public class YAMLConfig {
 		this.categoryFile = categoryFile;
 	}
 
+	public String getAlertFile() {
+		return alertFile;
+	}
+
+	public void setAlertFile(String alertFile) {
+		this.alertFile = alertFile;
+	}
 }

@@ -81,25 +81,37 @@ public class BooksApplication extends Application {
 		root = fxmlLoader.load();
 	}
 
+	/**
+	 * Copy application resources into the .mcdb folder.
+	 * 
+	 * @throws IOException
+	 */
 	private void initializeFiles() throws IOException {
 		YAMLConfig myConfig = springContext.getBean(YAMLConfig.class);
 
 		// Unpack help.zip
 		if (!new File(myConfig.getHelpDestination()).exists()) {
-			new HelpExtractor().extract("/help.zip", myConfig.getDataDirectory());
+			new HelpExtractor().extract("/resources/help.zip", myConfig.getDataDirectory());
 		}
 
 		// Copy forms.txt
 		Path path = Paths.get(myConfig.getFormFile());
 		if (Files.notExists(path)) {
-			Files.copy(getClass().getResourceAsStream("/forms.txt"), path);
+			Files.copy(getClass().getResourceAsStream("/resources/forms.txt"), path);
 		}
 
 		// Copy categories.txt
 		path = Paths.get(myConfig.getCategoryFile());
 		if (Files.notExists(path)) {
-			Files.copy(getClass().getResourceAsStream("/categories.txt"), path);
+			Files.copy(getClass().getResourceAsStream("/resources/categories.txt"), path);
 		}
+		
+		// Copy Alert.mp3
+		path = Paths.get(myConfig.getAlertFile());
+		if (Files.notExists(path)) {
+			Files.copy(getClass().getResourceAsStream("/resources/alert.mp3"), path);
+		}
+
 	}
 
 	@Override

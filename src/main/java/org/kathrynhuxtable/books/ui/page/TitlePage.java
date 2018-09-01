@@ -34,7 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeSet;
 
-import org.kathrynhuxtable.books.ComboSource;
+import org.kathrynhuxtable.books.AppResource;
 import org.kathrynhuxtable.books.persistence.domain.Author;
 import org.kathrynhuxtable.books.persistence.domain.DomainObject;
 import org.kathrynhuxtable.books.persistence.domain.Title;
@@ -59,7 +59,7 @@ import javafx.scene.control.TextField;
 public class TitlePage extends AbstractPage {
 	
 	@Autowired
-	private ComboSource comboSource;
+	private AppResource appResource;
 
 	@FXML
 	private TextField title;
@@ -123,8 +123,8 @@ public class TitlePage extends AbstractPage {
 		addDoubleClickActionListener(contents);
 		addDoubleClickActionListener(collectedIn);
 		
-		category.setItems(FXCollections.observableList(comboSource.getForms()));
-		form.setItems(FXCollections.observableList(comboSource.getCategories()));
+		category.setItems(FXCollections.observableList(appResource.getForms()));
+		form.setItems(FXCollections.observableList(appResource.getCategories()));
 	}
 
 	@Override
