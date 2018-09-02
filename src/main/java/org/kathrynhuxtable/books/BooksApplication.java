@@ -17,9 +17,11 @@ package org.kathrynhuxtable.books;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Locale;
 
 import org.kathrynhuxtable.books.ui.control.MainBooksPane;
@@ -50,8 +52,10 @@ import javafx.stage.WindowEvent;
  */
 @SpringBootApplication
 public class BooksApplication extends Application {
+
 	private static final String OS_NAME = System.getProperty("books.os.name", System.getProperty("os.name"));
 	private static final String OS_ARCH = System.getProperty("books.os.arch", System.getProperty("os.arch"));
+
 	public static final boolean IS_IPHONE = false;
 	public static final boolean IS_IOS = OS_NAME.startsWith("iOS");
 	public static final boolean IS_ANDROID = "android".equals(System.getProperty("javafx.platform")) || "Dalvik".equals(System.getProperty("java.vm.name"));
@@ -97,7 +101,7 @@ public class BooksApplication extends Application {
 		YAMLConfig myConfig = springContext.getBean(YAMLConfig.class);
 
 		// Unpack help.zip
-		if (!new File(myConfig.getHelpDestination()).exists()) {
+		if (isHelpNewer(myConfig)) {
 			new HelpExtractor().extract("/resources/help.zip", myConfig.getDataDirectory());
 		}
 
@@ -119,6 +123,16 @@ public class BooksApplication extends Application {
 			Files.copy(getClass().getResourceAsStream("/resources/alert.mp3"), path);
 		}
 
+	}
+
+	private boolean isHelpNewer(YAMLConfig myConfig) throws IOException {
+		if (!new File(myConfig.getHelpDestination()).exists()) {
+			return true;
+		} else {
+			URL url = getClass().getResource("/resources/help.zip");
+			long lastModified = new Date(url.openConnection().getLastModified()).getTime();
+			return lastModified >= new File(myConfig.getHelpDestination()).lastModified();
+		}
 	}
 
 	@Override
@@ -165,8 +179,8 @@ public class BooksApplication extends Application {
 		Menu appMenu = new Menu();
 		MenuItem aboutItem = new MenuItem("About " + appName);
 		aboutItem.setOnAction(event -> springContext.getBean(MainController.class).showAboutDialog());
-		appMenu.getItems().addAll(aboutItem, new SeparatorMenuItem(), new SeparatorMenuItem(), tk.createHideMenuItem(appName),
-				tk.createHideOthersMenuItem(), tk.createUnhideAllMenuItem(), new SeparatorMenuItem(), tk.createQuitMenuItem(appName));
+		appMenu.getItems().addAll(aboutItem, new SeparatorMenuItem(), new SeparatorMenuItem(), tk.createHideMenuItem(appName), tk.createHideOthersMenuItem(),
+				tk.createUnhideAllMenuItem(), new SeparatorMenuItem(), tk.createQuitMenuItem(appName));
 		tk.setApplicationMenu(appMenu);
 	}
 
