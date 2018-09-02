@@ -23,25 +23,45 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.web.WebView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" prefWidth="350" prefHeight="150">
+<BorderPane xmlns:fx="http://javafx.com/fxml">
 	<center>
 		<VBox spacing="5.0">
 			<children>
-				<Label text="Simple linked database for books, CDs, DVDs, etc." />
-				<Label text="Version ${project.version}" />
-				<Label text="Built: ${timestamp}" />
-				<Label text=" " />
-				<Label text="Developed by Kathryn Huxtable" />
-				<Label text="https://github.com/khuxtable/books" />
-				<Label text=" " />
-
-				<ButtonBar>
-					<buttons>
-						<Button fx:id="buttonClose" onAction="#closeAbout" text="Close" ButtonBar.buttonData="CANCEL_CLOSE"
-							defaultButton="true" />
-					</buttons>
-				</ButtonBar>
+				<HBox alignment="CENTER_LEFT" spacing="5.0">
+					<children>
+						<ImageView fitWidth="64" fitHeight="64">
+							<image>
+								<Image url="/mcdb.png" />
+							</image>
+						</ImageView>
+						<VBox alignment="CENTER_LEFT">
+							<children>
+								<Label text="Simple linked database for books, CDs, DVDs, etc." />
+								<Label text="Version ${project.version}" />
+								<Label text="Built: ${timestamp}" />
+							</children>
+						</VBox>
+					</children>
+				</HBox>
+				<HBox>
+					<children>
+						<VBox alignment="CENTER_LEFT">
+							<children>
+								<Label text="Developed by Kathryn Huxtable" />
+								<Label text="kathryn@kathrynhuxtable.org" />
+								<Label text="https://github.com/khuxtable/books" />
+							</children>
+						</VBox>
+						<VBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
+							<children>
+								<Button fx:id="buttonClose" onAction="#closeAbout" text="Close" defaultButton="true" />
+							</children>
+						</VBox>
+					</children>
+				</HBox>
 			</children>
 			<padding>
 				<Insets bottom="5" left="5" right="5" top="5" />
