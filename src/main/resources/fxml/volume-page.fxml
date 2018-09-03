@@ -71,8 +71,11 @@
 			<Label text="Library of Congress#:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
 			<TextField fx:id="libraryOfCongress" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-			<Label text="Borrower:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-			<TextField fx:id="borrower" GridPane.columnIndex="1" GridPane.rowIndex="6" editable="false">
+			<Label text="ASIN:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+			<TextField fx:id="asin" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+			<Label text="Borrower:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+			<TextField fx:id="borrower" GridPane.columnIndex="1" GridPane.rowIndex="7" editable="false">
 				<contextMenu>
 					<ContextMenu>
 						<items>
@@ -84,8 +87,8 @@
 				</contextMenu>
 			</TextField>
 
-			<Label text="Note:" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.valignment="top" />
-			<TextArea fx:id="note" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.vgrow="always" />
+			<Label text="Note:" GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.valignment="top" />
+			<TextArea fx:id="note" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.vgrow="always" />
 		</GridPane>
 	</children>
 </StackPane>

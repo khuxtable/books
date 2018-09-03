@@ -56,6 +56,8 @@ public class VolumePage extends AbstractPage {
 	@FXML
 	private TextField libraryOfCongress;
 	@FXML
+	private TextField asin;
+	@FXML
 	private TextField borrower;
 	@FXML
 	private TextArea note;
@@ -127,6 +129,7 @@ public class VolumePage extends AbstractPage {
 			published.setText(volume.getPublicationDate() == null ? "" : volume.getPublicationDate());
 			isbn.setText(volume.getIsbn() == null ? "" : volume.getIsbn());
 			libraryOfCongress.setText(volume.getLibraryOfCongress() == null ? "" : volume.getLibraryOfCongress());
+			asin.setText(volume.getAsin() == null ? "" : volume.getAsin());
 			borrower.setText(volume.getBorrower() == null ? "" : volume.getBorrower().getName());
 			note.setText(volume.getNote() == null ? "" : volume.getNote());
 			checkOut = volume.getBorrower();
@@ -138,6 +141,7 @@ public class VolumePage extends AbstractPage {
 			published.setText("");
 			isbn.setText("");
 			libraryOfCongress.setText("");
+			asin.setText("");
 			borrower.setText("");
 			note.setText("");
 			checkOut = null;
@@ -163,6 +167,7 @@ public class VolumePage extends AbstractPage {
 		published.textProperty().addListener((observable, oldDate, newDate) -> updateChangedStatus());
 		isbn.textProperty().addListener((observable, oldDate, newDate) -> updateChangedStatus());
 		libraryOfCongress.textProperty().addListener((observable, oldDate, newDate) -> updateChangedStatus());
+		asin.textProperty().addListener((observable, oldDate, newDate) -> updateChangedStatus());
 
 		pageBrowser.bindCommand(menuVolumeBorrowerCheckIn, CommandName.VOLUME_BORROWER_CHECK_IN);
 		pageBrowser.bindCommand(menuVolumeBorrowerCheckOut, CommandName.VOLUME_BORROWER_CHECK_OUT);
@@ -198,6 +203,7 @@ public class VolumePage extends AbstractPage {
 		volume.setPublicationDate(published.getText());
 		volume.setIsbn(isbn.getText());
 		volume.setLibraryOfCongress(libraryOfCongress.getText());
+		volume.setAsin(asin.getText());
 		volume.setNote(note.getText());
 		volume.setBorrower(checkOut);
 
@@ -225,6 +231,9 @@ public class VolumePage extends AbstractPage {
 			if (!Objects.equals(libraryOfCongress.getText(), volume.getLibraryOfCongress())) {
 				return true;
 			}
+			if (!Objects.equals(asin.getText(), volume.getAsin())) {
+				return true;
+			}
 			if (!Objects.equals(note.getText(), volume.getNote())) {
 				return true;
 			}
@@ -248,6 +257,9 @@ public class VolumePage extends AbstractPage {
 				return true;
 			}
 			if (!StringUtils.isEmpty(libraryOfCongress.getText())) {
+				return true;
+			}
+			if (!StringUtils.isEmpty(asin.getText())) {
 				return true;
 			}
 			if (!StringUtils.isEmpty(note.getText())) {

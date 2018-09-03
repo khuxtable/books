@@ -58,6 +58,8 @@ public class Volume implements DomainObject, Cloneable, Comparable<Volume>, Seri
 	@Field
 	private String libraryOfCongress;
 	@Field
+	private String asin;
+	@Field
 	private String note;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -171,6 +173,21 @@ public class Volume implements DomainObject, Cloneable, Comparable<Volume>, Seri
 	 */
 	public void setLibraryOfCongress(String libraryOfCongress) {
 		this.libraryOfCongress = libraryOfCongress;
+	}
+
+	/**
+	 * @return the asin
+	 */
+	public String getAsin() {
+		return asin;
+	}
+
+	/**
+	 * @param asin
+	 *            the asin to set
+	 */
+	public void setAsin(String asin) {
+		this.asin = asin;
 	}
 
 	/**
