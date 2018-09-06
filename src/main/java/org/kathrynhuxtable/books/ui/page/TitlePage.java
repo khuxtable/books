@@ -398,6 +398,7 @@ public class TitlePage extends AbstractPage {
 		pageBrowser.gotoVolumesPage();
 
 		VolumePage volumePage = pageBrowser.getVolumePage();
+		volumePage.doNew();
 		volumePage.setEntry(titleObj);
 	}
 
