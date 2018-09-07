@@ -18,6 +18,7 @@ package org.kathrynhuxtable.books.ui.controller;
 import java.io.IOException;
 
 import org.kathrynhuxtable.books.BooksApplication;
+import org.kathrynhuxtable.books.persistence.util.DataLoader;
 import org.kathrynhuxtable.books.service.BooksService;
 import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.ui.control.SearchBox;
@@ -51,6 +52,8 @@ public class MainController {
 	// Spring components
 	@Autowired
 	private BooksService booksService;
+	@Autowired
+	private DataLoader dataLoader;
 	@Autowired
 	private PageBrowserController pageBrowserController;
 	@Autowired
@@ -96,6 +99,8 @@ public class MainController {
 
 	@FXML
 	private MenuItem rebuildIndexes;
+	@FXML
+	private MenuItem loadData;
 	@FXML
 	private MenuItem menuExit;
 
@@ -191,6 +196,7 @@ public class MainController {
 
 		// Wire File Menu
 		rebuildIndexes.setOnAction(event -> booksService.rebuildIndexes());
+		loadData.setOnAction(event -> dataLoader.load("/Users/huxtable/.mcdb/load-data.txt"));
 		if (BooksApplication.IS_MAC) {
 			menuExit.setVisible(false);
 		} else {

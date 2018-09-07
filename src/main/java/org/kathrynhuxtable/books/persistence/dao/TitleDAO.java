@@ -18,6 +18,7 @@ package org.kathrynhuxtable.books.persistence.dao;
 import java.util.Collections;
 import java.util.List;
 
+import org.kathrynhuxtable.books.persistence.domain.Author;
 import org.kathrynhuxtable.books.persistence.domain.Title;
 import org.kathrynhuxtable.books.service.TitlePropertyComparator;
 import org.springframework.data.repository.CrudRepository;
@@ -33,5 +34,7 @@ public interface TitleDAO extends CrudRepository<Title, Long> {
 	}
 
 	List<Title> findByTitleContainsIgnoreCaseOrderByTitleAsc(String title);
+	
+	List<Title> findByTitleAndAuthors(String title, List<Author> authors);
 
 }
