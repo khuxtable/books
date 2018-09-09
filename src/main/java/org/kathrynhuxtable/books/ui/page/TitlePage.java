@@ -57,7 +57,7 @@ import javafx.scene.control.TextField;
 
 @Component
 public class TitlePage extends AbstractPage {
-	
+
 	@Autowired
 	private AppResource appResource;
 
@@ -122,9 +122,9 @@ public class TitlePage extends AbstractPage {
 		addDoubleClickActionListener(volumes);
 		addDoubleClickActionListener(contents);
 		addDoubleClickActionListener(collectedIn);
-		
-		category.setItems(FXCollections.observableList(appResource.getForms()));
-		form.setItems(FXCollections.observableList(appResource.getCategories()));
+
+		category.setItems(FXCollections.observableList(appResource.getCategories()));
+		form.setItems(FXCollections.observableList(appResource.getForms()));
 	}
 
 	@Override

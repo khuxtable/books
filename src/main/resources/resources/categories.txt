@@ -1,23 +1,11 @@
-Album
-Anthology
-Art
-Collection
-Essay
-Excerpt
-Graphic Novel
-Guide
+Classical Music
+Fantasy
 Joke
-Map
-Movie Outline
-Music
-Myth
-Novel
-Novel Section
-Novelette
-Novella
-Poem
-Screenplay
-Series
-Short Story
-Song
-Speech
+Literature
+Magazine
+Philosophy
+Poetry
+Popular Music
+Science
+Science Fantasy
+Science Fiction
