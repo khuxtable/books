@@ -87,7 +87,7 @@ public class DataLoader {
 
 			Borrower borrower = null;
 			if (volume != null && headers.canImportBorrowers() && !record.getBorrowerName().isEmpty()) {
-				borrower = addBorrower(results, record, borrower);
+				borrower = addBorrower(record, volume, results);
 				if (borrower == null) {
 					continue;
 				}
@@ -143,17 +143,20 @@ public class DataLoader {
 		return volume;
 	}
 
-	private Borrower addBorrower(List<DataLoaderResult> results, DataRecord record, Borrower borrower) {
+	private Borrower addBorrower(DataRecord record, Volume volume, List<DataLoaderResult> results) {
 		DataName dataName = new DataName(record.getBorrowerName());
 		List<Borrower> borrowers = findBorrowers(dataName);
 		if (borrowers.isEmpty()) {
 			// Create new borrower
-			borrower = saveBorrower(record, dataName);
+			Borrower borrower = saveBorrower(record, volume, dataName);
 			results.add(DataLoaderResult.Success("Added borrower " + borrower.getName()));
+			return borrower;
 		} else if (borrowers.size() > 1) {
 			results.add(DataLoaderResult.Error("Found multiple Borrower matches for \"" + record.getBorrowerName() + "\""));
+			return null;
+		} else {
+			return borrowers.get(0);
 		}
-		return borrower;
 	}
 
 	private List<Author> findAuthors(DataName dataName) {
@@ -205,10 +208,11 @@ public class DataLoader {
 		return volumeDao.save(volume);
 	}
 
-	private Borrower saveBorrower(DataRecord record, DataName dataName) {
+	private Borrower saveBorrower(DataRecord record, Volume volume, DataName dataName) {
 		Borrower borrower = new Borrower();
 		borrower.setLastName(dataName.getLastName());
 		borrower.setFirstName(dataName.getFirstName());
+		borrower.addVolume(volume);
 		borrower.setCheckOutDate(record.getCheckOutDate());
 		borrower.setNote(record.getBorrowerNote());
 		return borrowerDao.save(borrower);
