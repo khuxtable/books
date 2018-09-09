@@ -193,7 +193,8 @@ public class MainController {
 	private ToggleGroupValue<DocumentType> menuPageToggleGroup = new ToggleGroupValue<>();
 	private ToggleGroupValue<DocumentType> buttonPageToggleGroup = new ToggleGroupValue<>();
 
-	private WorkIndicatorDialog<File, List<DataLoaderResult>> wd = null;
+	private WorkIndicatorDialog<File, List<DataLoaderResult>> importDataDialog = null;
+	private WorkIndicatorDialog<Integer, Integer> rebuildIndexesDialog = null;
 
 	public void initialize() {
 
@@ -207,7 +208,7 @@ public class MainController {
 		toolBar.titleTextProperty().bind(pageBrowserController.currentPageTitleProperty());
 
 		// Wire File Menu
-		rebuildIndexes.setOnAction(event -> booksService.rebuildIndexes());
+		rebuildIndexes.setOnAction(event -> rebuildLuceneIndexes());
 		importData.setOnAction(event -> loadDataFromFile());
 		if (BooksApplication.IS_MAC) {
 			menuExit.setVisible(false);
@@ -343,6 +344,19 @@ public class MainController {
 		}
 	}
 
+	private void rebuildLuceneIndexes() {
+		Window window = buttonHome.getScene().getWindow();
+		rebuildIndexesDialog = new WorkIndicatorDialog<Integer, Integer>(window, "Rebuilding Indexes...");
+
+		rebuildIndexesDialog.addTaskEndNotification(result -> {
+		});
+
+		rebuildIndexesDialog.exec(0, input -> {
+			booksService.rebuildIndexes();
+			return 0;
+		});
+	}
+
 	private void loadDataFromFile() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Resource File");
@@ -353,9 +367,9 @@ public class MainController {
 			return;
 		}
 
-		wd = new WorkIndicatorDialog<File, List<DataLoaderResult>>(window, "Loading Project Files...");
+		importDataDialog = new WorkIndicatorDialog<File, List<DataLoaderResult>>(window, "Loading Project Files...");
 
-		wd.addTaskEndNotification(result -> {
+		importDataDialog.addTaskEndNotification(result -> {
 			try {
 				final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/loader-dialog.fxml"));
 				loader.setController(loaderDialogController);
@@ -379,10 +393,10 @@ public class MainController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			wd = null; // don't keep the object, cleanup
+			importDataDialog = null; // don't keep the object, cleanup
 		});
 
-		wd.exec(selectedFile, filename -> dataLoader.load(filename));
+		importDataDialog.exec(selectedFile, file -> dataLoader.load(file));
 	}
 
 	private void showHelpDialog() {
