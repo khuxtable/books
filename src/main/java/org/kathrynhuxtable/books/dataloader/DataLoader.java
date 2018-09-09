@@ -57,13 +57,13 @@ public class DataLoader {
 			return results;
 		}
 
-		List<DataLoaderResult> results = new ArrayList<>();
+		List<DataLoaderResult> messages = new ArrayList<>();
 		DataHeaders headers = handler.getHeaders();
 
 		for (DataRecord record : handler.getResults()) {
 			List<Author> authors = null;
 			if (headers.canImportAuthors() && !record.getAuthorName().isEmpty()) {
-				authors = addAuthors(record, results);
+				authors = addAuthors(record, messages);
 				if (authors == null) {
 					continue;
 				}
@@ -71,7 +71,7 @@ public class DataLoader {
 
 			Title entry = null;
 			if (headers.canImportTitles() && !record.getTitle().isEmpty()) {
-				entry = addTitle(record, authors, results);
+				entry = addTitle(record, authors, messages);
 				if (entry == null) {
 					continue;
 				}
@@ -79,7 +79,7 @@ public class DataLoader {
 
 			Volume volume = null;
 			if (entry != null && headers.canImportVolumes()) {
-				volume = addVolume(record, entry, results);
+				volume = addVolume(record, entry, messages);
 				if (volume == null) {
 					continue;
 				}
@@ -87,17 +87,17 @@ public class DataLoader {
 
 			Borrower borrower = null;
 			if (volume != null && headers.canImportBorrowers() && !record.getBorrowerName().isEmpty()) {
-				borrower = addBorrower(record, volume, results);
+				borrower = addBorrower(record, volume, messages);
 				if (borrower == null) {
 					continue;
 				}
 			}
 		}
 
-		return results;
+		return messages;
 	}
 
-	private List<Author> addAuthors(DataRecord record, List<DataLoaderResult> results) {
+	private List<Author> addAuthors(DataRecord record, List<DataLoaderResult> messages) {
 		List<Author> authors = new ArrayList<>();
 
 		boolean error = false;
@@ -107,12 +107,11 @@ public class DataLoader {
 			if (found.isEmpty()) {
 				// Create new author
 				Author author = saveAuthor(record, dataName);
-				results.add(DataLoaderResult.Success("Added author " + author.getName()));
+				messages.add(DataLoaderResult.Success("Added author " + author.getName()));
 				authors.add(author);
 			} else if (found.size() > 1) {
-				results.add(DataLoaderResult.Error("Found multiple Author matches for \"" + name + "\""));
+				messages.add(DataLoaderResult.Error("Found multiple Author matches for \"" + name + "\""));
 				error = true;
-				;
 			} else {
 				authors.add(found.get(0));
 			}
@@ -121,38 +120,39 @@ public class DataLoader {
 		return error ? null : authors;
 	}
 
-	private Title addTitle(DataRecord record, List<Author> authors, List<DataLoaderResult> results) {
+	private Title addTitle(DataRecord record, List<Author> authors, List<DataLoaderResult> messages) {
 		List<Title> titles = findTitle(record, authors);
 		if (titles.isEmpty()) {
 			// Create new title
-			Title entry = saveTitle(record, authors);
-			results.add(DataLoaderResult.Success("Added title " + entry.getTitle()));
+			List<Title> contents = findContents(record, messages);
+			Title entry = saveTitle(record, authors, contents);
+			messages.add(DataLoaderResult.Success("Added title " + entry.getTitle()));
 			return entry;
 		} else if (titles.size() > 1) {
-			results.add(DataLoaderResult.Error("Found multiple title matches for \"" + record.getTitle() + "\""));
+			messages.add(DataLoaderResult.Error("Found multiple title matches for \"" + record.getTitle() + "\""));
 			return null;
 		} else {
 			return titles.get(0);
 		}
 	}
 
-	private Volume addVolume(DataRecord record, Title entry, List<DataLoaderResult> results) {
+	private Volume addVolume(DataRecord record, Title entry, List<DataLoaderResult> messages) {
 		Volume volume;
 		volume = saveVolume(record, entry);
-		results.add(DataLoaderResult.Success("Added volume for " + volume));
+		messages.add(DataLoaderResult.Success("Added volume for " + volume));
 		return volume;
 	}
 
-	private Borrower addBorrower(DataRecord record, Volume volume, List<DataLoaderResult> results) {
+	private Borrower addBorrower(DataRecord record, Volume volume, List<DataLoaderResult> messages) {
 		DataName dataName = new DataName(record.getBorrowerName());
 		List<Borrower> borrowers = findBorrowers(dataName);
 		if (borrowers.isEmpty()) {
 			// Create new borrower
 			Borrower borrower = saveBorrower(record, volume, dataName);
-			results.add(DataLoaderResult.Success("Added borrower " + borrower.getName()));
+			messages.add(DataLoaderResult.Success("Added borrower " + borrower.getName()));
 			return borrower;
 		} else if (borrowers.size() > 1) {
-			results.add(DataLoaderResult.Error("Found multiple Borrower matches for \"" + record.getBorrowerName() + "\""));
+			messages.add(DataLoaderResult.Error("Found multiple Borrower matches for \"" + record.getBorrowerName() + "\""));
 			return null;
 		} else {
 			return borrowers.get(0);
@@ -165,6 +165,35 @@ public class DataLoader {
 
 	private List<Title> findTitle(DataRecord record, List<Author> authors) {
 		return titleDao.findByTitleAndAuthors(record.getTitle(), authors);
+	}
+
+	private List<Title> findContents(DataRecord record, List<DataLoaderResult> messages) {
+		List<Title> contents = new ArrayList<>();
+		String contentsText = record.getContents();
+		if (contentsText != null && !contentsText.isEmpty()) {
+			for (String titleForm : contentsText.split("//")) {
+				String title;
+				String form;
+				if (titleForm.contains("::")) {
+					String[] parts = titleForm.split("::", 2);
+					title = parts[0].trim();
+					form = parts[1].trim();
+				} else {
+					title = titleForm.trim();
+					form = "";
+				}
+
+				List<Title> entries = titleDao.findByTitleAndForm(title, form);
+				if (entries.isEmpty()) {
+					messages.add(DataLoaderResult.Error("No match for contents " + title + "[" + form + "] in title " + title));
+				} else if (entries.size() > 1) {
+					messages.add(DataLoaderResult.Error("Multiple matches for contents " + title + " [" + form + "] in title " + record.getTitle()));
+				} else {
+					contents.add(entries.get(0));
+				}
+			}
+		}
+		return contents;
 	}
 
 	private List<Borrower> findBorrowers(DataName dataName) {
@@ -184,7 +213,7 @@ public class DataLoader {
 		return authorDao.save(author);
 	}
 
-	private Title saveTitle(DataRecord record, List<Author> authors) {
+	private Title saveTitle(DataRecord record, List<Author> authors, List<Title> contents) {
 		Title entry = new Title();
 		entry.setTitle(record.getTitle());
 		entry.setAuthors(authors);
@@ -192,6 +221,7 @@ public class DataLoader {
 		entry.setForm(record.getForm());
 		entry.setHaveRead(record.isHaveRead());
 		entry.setNote(record.getTitleNote());
+		contents.forEach(title -> entry.addContent(title));
 		return titleDao.save(entry);
 	}
 

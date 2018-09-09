@@ -42,6 +42,7 @@ public class DataHeaders {
 	public static final String PUBLICATION_YEAR = "publicationYear";
 	public static final String HAVE_READ = "haveRead";
 	public static final String TITLE_NOTE = "titleNote";
+	public static final String CONTENTS = "contents";
 
 	public static final String BINDING = "binding";
 	public static final String PUBLISHER = "publisher";
@@ -61,7 +62,7 @@ public class DataHeaders {
 	}));
 
 	public static final Set<String> TITLE_FIELDS = new HashSet<>(Arrays.asList(new String[] {
-		TITLE, CATEGORY, FORM, PUBLICATION_YEAR, HAVE_READ, TITLE_NOTE
+		TITLE, CATEGORY, FORM, PUBLICATION_YEAR, HAVE_READ, TITLE_NOTE, CONTENTS
 	}));
 
 	public static final Set<String> VOLUME_FIELDS = new HashSet<>(Arrays.asList(new String[] {
@@ -84,9 +85,9 @@ public class DataHeaders {
 	// Headers from the first line of the file.
 	private Set<String> headers;
 
-	public DataHeaders(Collection<String> headers) throws FileHandlerDataException {
-		headers = new HashSet<>();
-		this.headers.addAll(headers);
+	public DataHeaders(Collection<String> headerSet) throws FileHandlerDataException {
+		this.headers = new HashSet<>();
+		this.headers.addAll(headerSet);
 		validateHeaders();
 	}
 

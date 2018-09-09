@@ -34,7 +34,8 @@ public interface TitleDAO extends CrudRepository<Title, Long> {
 	}
 
 	List<Title> findByTitleContainsIgnoreCaseOrderByTitleAsc(String title);
-	
+
 	List<Title> findByTitleAndAuthors(String title, List<Author> authors);
 
+	List<Title> findByTitleAndForm(String title, String category);
 }

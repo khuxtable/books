@@ -18,6 +18,7 @@ package org.kathrynhuxtable.books.dataloader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.csv.CSVRecord;
 
@@ -39,6 +40,7 @@ public class DataRecord {
 	private final String publicationYear;
 	private final boolean haveRead;
 	private final String titleNote;
+	private final String contents;
 
 	private final String binding;
 	private final String publisher;
@@ -74,6 +76,7 @@ public class DataRecord {
 		publicationYear = getCsvValue(record, headers, DataHeaders.PUBLICATION_YEAR);
 		haveRead = getCsvValue(record, headers, DataHeaders.HAVE_READ) == null ? false : parseBoolean(getCsvValue(record, headers, DataHeaders.HAVE_READ));
 		titleNote = getCsvValue(record, headers, DataHeaders.TITLE_NOTE);
+		contents = getCsvValue(record, headers, DataHeaders.CONTENTS);
 
 		binding = getCsvValue(record, headers, DataHeaders.BINDING);
 		publisher = getCsvValue(record, headers, DataHeaders.PUBLISHER);
@@ -110,6 +113,7 @@ public class DataRecord {
 		publicationYear = getTxtValue(record, headers, DataHeaders.PUBLICATION_YEAR);
 		haveRead = record.get(DataHeaders.HAVE_READ) == null ? false : parseBoolean(record.get(DataHeaders.HAVE_READ));
 		titleNote = getTxtValue(record, headers, DataHeaders.TITLE_NOTE);
+		contents = getTxtValue(record, headers, DataHeaders.CONTENTS);
 
 		binding = getTxtValue(record, headers, DataHeaders.BINDING);
 		publisher = getTxtValue(record, headers, DataHeaders.PUBLISHER);
@@ -172,6 +176,10 @@ public class DataRecord {
 		return titleNote;
 	}
 
+	public String getContents() {
+		return contents;
+	}
+
 	public String getBinding() {
 		return binding;
 	}
@@ -215,15 +223,15 @@ public class DataRecord {
 	// Methods to parse file input.
 
 	private String getCsvValue(CSVRecord record, DataHeaders headers, String header) {
-		return !headers.contains(header) ? null : record.get(header) == null ? null : record.get(header).trim();
+		return !headers.contains(header) ? "" : record.get(header) == null ? "" : record.get(header).trim();
 	}
 
 	private String getTxtValue(Map<String, String> record, DataHeaders headers, String header) {
-		return !headers.contains(header) ? null : record.get(header) == null ? null : record.get(header).trim();
+		return !headers.contains(header) ? "" : record.get(header) == null ? "" : record.get(header).trim();
 	}
 
 	private static LocalDate parseDate(String str) {
-		if (str == null) {
+		if (str == null || str.isEmpty()) {
 			return null;
 		} else if (str.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d")) {
 			return LocalDate.parse(str, DateTimeFormatter.ISO_LOCAL_DATE);
