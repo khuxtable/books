@@ -44,7 +44,8 @@
 				<Menu text="File">
 					<items>
 						<MenuItem fx:id="rebuildIndexes" text="Rebuild Indexes" />
-						<!-- <MenuItem fx:id="loadData" text="Load Data from File" /> -->
+						<MenuItem fx:id="importData" text="Import Data..." />
+						<MenuItem fx:id="exportData" text="Export Data..." />
 						<MenuItem fx:id="menuExit" text="Exit" />
 					</items>
 				</Menu>

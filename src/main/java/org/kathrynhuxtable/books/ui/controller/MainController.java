@@ -15,14 +15,18 @@
  */
 package org.kathrynhuxtable.books.ui.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.kathrynhuxtable.books.BooksApplication;
-import org.kathrynhuxtable.books.persistence.util.DataLoader;
+import org.kathrynhuxtable.books.dataloader.DataLoader;
 import org.kathrynhuxtable.books.service.BooksService;
+import org.kathrynhuxtable.books.service.DataLoaderResult;
 import org.kathrynhuxtable.books.service.DocumentType;
 import org.kathrynhuxtable.books.ui.control.SearchBox;
 import org.kathrynhuxtable.books.ui.control.TitledToolBar;
+import org.kathrynhuxtable.books.ui.control.WorkIndicatorDialog;
 import org.kathrynhuxtable.books.ui.controller.PageBrowserController.CommandName;
 import org.kathrynhuxtable.books.ui.element.SearchPopover;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -60,6 +66,8 @@ public class MainController {
 	private AboutDialogController aboutDialogController;
 	@Autowired
 	private HelpDialogController helpDialogController;
+	@Autowired
+	private LoaderDialogController loaderDialogController;
 
 	// Main page elements
 	@FXML
@@ -100,7 +108,9 @@ public class MainController {
 	@FXML
 	private MenuItem rebuildIndexes;
 	@FXML
-	private MenuItem loadData;
+	private MenuItem importData;
+	@FXML
+	private MenuItem exportData;
 	@FXML
 	private MenuItem menuExit;
 
@@ -183,6 +193,8 @@ public class MainController {
 	private ToggleGroupValue<DocumentType> menuPageToggleGroup = new ToggleGroupValue<>();
 	private ToggleGroupValue<DocumentType> buttonPageToggleGroup = new ToggleGroupValue<>();
 
+	private WorkIndicatorDialog<File, List<DataLoaderResult>> wd = null;
+
 	public void initialize() {
 
 		// Initialize popover.
@@ -196,7 +208,7 @@ public class MainController {
 
 		// Wire File Menu
 		rebuildIndexes.setOnAction(event -> booksService.rebuildIndexes());
-		loadData.setOnAction(event -> dataLoader.load("/Users/huxtable/.mcdb/load-data.txt"));
+		importData.setOnAction(event -> loadDataFromFile());
 		if (BooksApplication.IS_MAC) {
 			menuExit.setVisible(false);
 		} else {
@@ -329,6 +341,48 @@ public class MainController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void loadDataFromFile() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Resource File");
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt", "*.csv"), new ExtensionFilter("All Files", "*.*"));
+		Window window = buttonHome.getScene().getWindow();
+		File selectedFile = fileChooser.showOpenDialog(window);
+		if (selectedFile == null) {
+			return;
+		}
+
+		wd = new WorkIndicatorDialog<File, List<DataLoaderResult>>(window, "Loading Project Files...");
+
+		wd.addTaskEndNotification(result -> {
+			try {
+				final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/loader-dialog.fxml"));
+				loader.setController(loaderDialogController);
+				final Parent root = loader.load();
+				loaderDialogController.setResults(result);
+				final Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.initModality(Modality.NONE);
+				stage.setTitle("Data Load Results");
+				stage.initOwner(window);
+				stage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+					if (KeyCode.ESCAPE == event.getCode()) {
+						stage.close();
+					}
+				});
+				if (!BooksApplication.IS_MAC) {
+					stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
+				}
+				stage.setScene(scene);
+				stage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			wd = null; // don't keep the object, cleanup
+		});
+
+		wd.exec(selectedFile, filename -> dataLoader.load(filename));
 	}
 
 	private void showHelpDialog() {
