@@ -53,6 +53,11 @@
 								<Label text="Developed by Kathryn Huxtable" />
 								<Label text="kathryn@kathrynhuxtable.org" />
 								<Label text="https://github.com/khuxtable/books" />
+								<Label text=" " />
+								<Label text="This software is provided under the Apache" />
+								<Label text="open source license on an &quot;AS IS&quot; BASIS, WITHOUT" />
+								<Label text="WARRANTIES OR CONDITIONS OF ANY KIND." />
+								<Label text="http://www.apache.org/licenses/LICENSE-2.0" />
 							</children>
 						</VBox>
 						<VBox alignment="BOTTOM_RIGHT" HBox.hgrow="ALWAYS">
