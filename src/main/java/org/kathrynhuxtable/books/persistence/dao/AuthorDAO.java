@@ -72,5 +72,4 @@ public interface AuthorDAO extends CrudRepository<Author, Long> {
 	List<Author> findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCase(String lastName, String firstName, Sort sort);
 
 	List<Author> findByLastNameAndFirstName(String lastName, String firstName);
-
 }

@@ -43,5 +43,4 @@ public interface VolumeDAO extends CrudRepository<Volume, Long> {
 	}
 
 	List<Volume> findByEntryTitleContainsIgnoreCase(String title);
-
 }

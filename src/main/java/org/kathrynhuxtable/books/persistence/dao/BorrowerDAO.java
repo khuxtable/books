@@ -72,5 +72,4 @@ public interface BorrowerDAO extends CrudRepository<Borrower, Long> {
 	List<Borrower> findByLastNameStartingWithAndFirstNameStartingWithAllIgnoreCase(String lastName, String firstName, Sort sort);
 
 	List<Borrower> findByLastNameAndFirstName(String lastName, String firstName);
-
 }
