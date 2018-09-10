@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.kathrynhuxtable.books.BooksApplication;
-import org.kathrynhuxtable.books.dataloader.DataLoader;
+import org.kathrynhuxtable.books.dataloader.DataExporter;
+import org.kathrynhuxtable.books.dataloader.DataImporter;
 import org.kathrynhuxtable.books.service.BooksService;
 import org.kathrynhuxtable.books.service.DataLoaderResult;
 import org.kathrynhuxtable.books.service.DocumentType;
@@ -59,7 +60,9 @@ public class MainController {
 	@Autowired
 	private BooksService booksService;
 	@Autowired
-	private DataLoader dataLoader;
+	private DataImporter dataImporter;
+	@Autowired
+	private DataExporter dataExporter;
 	@Autowired
 	private PageBrowserController pageBrowserController;
 	@Autowired
@@ -193,8 +196,9 @@ public class MainController {
 	private ToggleGroupValue<DocumentType> menuPageToggleGroup = new ToggleGroupValue<>();
 	private ToggleGroupValue<DocumentType> buttonPageToggleGroup = new ToggleGroupValue<>();
 
-	private WorkIndicatorDialog<File, List<DataLoaderResult>> importDataDialog = null;
 	private WorkIndicatorDialog<Integer, Integer> rebuildIndexesDialog = null;
+	private WorkIndicatorDialog<File, List<DataLoaderResult>> importDataDialog = null;
+	private WorkIndicatorDialog<File, List<DataLoaderResult>> exportDataDialog = null;
 
 	public void initialize() {
 
@@ -210,6 +214,7 @@ public class MainController {
 		// Wire File Menu
 		rebuildIndexes.setOnAction(event -> rebuildLuceneIndexes());
 		importData.setOnAction(event -> loadDataFromFile());
+		exportData.setOnAction(event -> exportDataToFile());
 		if (BooksApplication.IS_MAC) {
 			menuExit.setVisible(false);
 		} else {
@@ -359,7 +364,7 @@ public class MainController {
 
 	private void loadDataFromFile() {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
+		fileChooser.setTitle("Open Import File");
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt", "*.csv"), new ExtensionFilter("All Files", "*.*"));
 		Window window = buttonHome.getScene().getWindow();
 		File selectedFile = fileChooser.showOpenDialog(window);
@@ -367,7 +372,7 @@ public class MainController {
 			return;
 		}
 
-		importDataDialog = new WorkIndicatorDialog<File, List<DataLoaderResult>>(window, "Loading Project Files...");
+		importDataDialog = new WorkIndicatorDialog<File, List<DataLoaderResult>>(window, "Importing from File...");
 
 		importDataDialog.addTaskEndNotification(result -> {
 			try {
@@ -396,7 +401,49 @@ public class MainController {
 			importDataDialog = null; // don't keep the object, cleanup
 		});
 
-		importDataDialog.exec(selectedFile, file -> dataLoader.load(file));
+		importDataDialog.exec(selectedFile, file -> dataImporter.load(file));
+	}
+
+	private void exportDataToFile() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Specify Export File");
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.csv", "*.txt"), new ExtensionFilter("All Files", "*.*"));
+		Window window = buttonHome.getScene().getWindow();
+		File selectedFile = fileChooser.showSaveDialog(window);
+		if (selectedFile == null) {
+			return;
+		}
+
+		exportDataDialog = new WorkIndicatorDialog<File, List<DataLoaderResult>>(window, "Exporting to File...");
+
+		exportDataDialog.addTaskEndNotification(result -> {
+			try {
+				final FXMLLoader loader = new FXMLLoader(SearchDialogController.class.getResource("/fxml/loader-dialog.fxml"));
+				loader.setController(loaderDialogController);
+				final Parent root = loader.load();
+				loaderDialogController.setResults(result);
+				final Scene scene = new Scene(root);
+				Stage stage = new Stage();
+				stage.initModality(Modality.NONE);
+				stage.setTitle("Data Export Results");
+				stage.initOwner(window);
+				stage.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+					if (KeyCode.ESCAPE == event.getCode()) {
+						stage.close();
+					}
+				});
+				if (!BooksApplication.IS_MAC) {
+					stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/mcdb.png")));
+				}
+				stage.setScene(scene);
+				stage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			exportDataDialog = null; // don't keep the object, cleanup
+		});
+
+		exportDataDialog.exec(selectedFile, file -> dataExporter.export(file));
 	}
 
 	private void showHelpDialog() {

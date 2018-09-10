@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DataLoader {
+public class DataImporter {
 
 	@Autowired
 	private AuthorDAO authorDao;

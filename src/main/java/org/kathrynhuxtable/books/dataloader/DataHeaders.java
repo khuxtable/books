@@ -57,29 +57,37 @@ public class DataHeaders {
 	public static final String BORROWER_NOTE = "borrowerNote";
 
 // @formatter:off
-	public static final Set<String> AUTHOR_FIELDS = new HashSet<>(Arrays.asList(new String[] {
+	private static final List<String> AUTHOR_FIELDS_LIST = Arrays.asList(new String[] {
 		AUTHOR_NAME, NATIONALITY, BIRTH_PLACE, BIRTH_DATE, DEATH_DATE, AUTHOR_NOTE
-	}));
-
-	public static final Set<String> TITLE_FIELDS = new HashSet<>(Arrays.asList(new String[] {
+	});
+	private static final List<String> TITLE_FIELDS_LIST = Arrays.asList(new String[] {
 		TITLE, CATEGORY, FORM, PUBLICATION_YEAR, HAVE_READ, TITLE_NOTE, CONTENTS
-	}));
-
-	public static final Set<String> VOLUME_FIELDS = new HashSet<>(Arrays.asList(new String[] {
+	});
+	private static final List<String> VOLUME_FIELDS_LIST = Arrays.asList(new String[] {
 		BINDING, PUBLISHER, PUBLICATION_DATE, ISBN, LIBRARY_OF_CONGRESS, ASIN, VOLUME_NOTE
-	}));
-
-	public static final Set<String> BORROWER_FIELDS = new HashSet<>(Arrays.asList(new String[] {
+	});
+	private static final List<String> BORROWER_FIELDS_LIST = Arrays.asList(new String[] {
 		BORROWER_NAME, CHECK_OUT_DATE, BORROWER_NOTE
-	}));
+	});
 // @formatter:on
 
+	public static final Set<String> AUTHOR_FIELDS = new HashSet<>(AUTHOR_FIELDS_LIST);
+	public static final Set<String> TITLE_FIELDS = new HashSet<>(TITLE_FIELDS_LIST);
+	public static final Set<String> VOLUME_FIELDS = new HashSet<>(VOLUME_FIELDS_LIST);
+	public static final Set<String> BORROWER_FIELDS = new HashSet<>(BORROWER_FIELDS_LIST);
+
 	public static final Set<String> ALLOWED_FIELDS = new HashSet<>();
+	public static final List<String> ALLOWED_FIELDS_LIST = new ArrayList<>();
 	static {
 		ALLOWED_FIELDS.addAll(AUTHOR_FIELDS);
 		ALLOWED_FIELDS.addAll(TITLE_FIELDS);
 		ALLOWED_FIELDS.addAll(VOLUME_FIELDS);
 		ALLOWED_FIELDS.addAll(BORROWER_FIELDS);
+
+		ALLOWED_FIELDS_LIST.addAll(AUTHOR_FIELDS_LIST);
+		ALLOWED_FIELDS_LIST.addAll(TITLE_FIELDS_LIST);
+		ALLOWED_FIELDS_LIST.addAll(VOLUME_FIELDS_LIST);
+		ALLOWED_FIELDS_LIST.addAll(BORROWER_FIELDS_LIST);
 	}
 
 	// Headers from the first line of the file.

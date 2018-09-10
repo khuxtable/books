@@ -15,9 +15,11 @@
  */
 package org.kathrynhuxtable.books.dataloader;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -26,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -39,13 +42,17 @@ public class DataFileHandler {
 	private File file;
 	private DataHeaders headers;
 	private List<DataRecord> results;
+	private boolean isCsv;
+
+	private BufferedWriter writer;
 
 	public DataFileHandler(File file) throws FileNotFoundException, IOException, FileHandlerDataException {
 		this.file = file;
+		isCsv = file.getName().toLowerCase().endsWith(".csv");
 
 		results = new ArrayList<>();
 
-		if (file.getName().toLowerCase().endsWith(".csv")) {
+		if (isCsv) {
 			try (Reader in = new FileReader(file)) {
 				CSVParser parser = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(in);
 
@@ -74,6 +81,14 @@ public class DataFileHandler {
 		}
 	}
 
+	public DataFileHandler(File file, boolean exportFlag) throws FileHandlerDataException, IOException {
+		this.file = file;
+		isCsv = file.getName().toLowerCase().endsWith(".csv");
+		headers = new DataHeaders(DataHeaders.ALLOWED_FIELDS);
+		writer = new BufferedWriter(new FileWriter(file));
+		write(DataHeaders.ALLOWED_FIELDS_LIST);
+	}
+
 	public File getFile() {
 		return file;
 	}
@@ -84,6 +99,32 @@ public class DataFileHandler {
 
 	public List<DataRecord> getResults() {
 		return results;
+	}
+
+	public void write(DataRecord record) throws IOException {
+		List<String> values = record.getValues();
+		write(values);
+	}
+
+	private void write(List<String> values) throws IOException {
+		if (isCsv) {
+			writer.write(String.join(",", values.stream().map(str -> formatCsvValue(str)).collect(Collectors.toList())));
+		} else {
+			writer.write(String.join("\t", values));
+		}
+		writer.newLine();
+	}
+
+	private String formatCsvValue(String str) {
+		if (str == null) {
+			return "\"\"";
+		}
+		str = str.replaceAll("\"", "\"\"");
+		return "\"" + str + "\"";
+	}
+
+	public void close() throws IOException {
+		writer.close();
 	}
 
 	private Map<String, String> arrayToMap(String line, String[] headings) {
@@ -98,7 +139,7 @@ public class DataFileHandler {
 	}
 
 	private String cleanupTxtField(String field) {
-		if  (field.startsWith("\"") && field.endsWith("\"")) {
+		if (field.startsWith("\"") && field.endsWith("\"")) {
 			field = field.substring(1, field.length() - 1);
 			// Replace any \" or "" with ".
 			field = field.replaceAll("[\\\\\"]\"", "\"");

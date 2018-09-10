@@ -17,6 +17,8 @@ package org.kathrynhuxtable.books.dataloader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.csv.CSVRecord;
@@ -26,32 +28,61 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class DataRecord {
 
-	private final String authorName;
-	private final String nationality;
-	private final String birthPlace;
-	private final LocalDate birthDate;
-	private final LocalDate deathDate;
-	private final String authorNote;
+	private String authorName;
+	private String nationality;
+	private String birthPlace;
+	private LocalDate birthDate;
+	private LocalDate deathDate;
+	private String authorNote;
 
-	private final String title;
-	private final String category;
-	private final String form;
-	private final String publicationYear;
-	private final boolean haveRead;
-	private final String titleNote;
-	private final String contents;
+	private String title;
+	private String category;
+	private String form;
+	private String publicationYear;
+	private boolean haveRead;
+	private String titleNote;
+	private String contents;
 
-	private final String binding;
-	private final String publisher;
-	private final String publicationDate;
-	private final String isbn;
-	private final String libraryOfCongress;
-	private final String asin;
-	private final String volumeNote;
+	private String binding;
+	private String publisher;
+	private String publicationDate;
+	private String isbn;
+	private String libraryOfCongress;
+	private String asin;
+	private String volumeNote;
 
-	private final String borrowerName;
-	private final String checkOutDate;
-	private final String borrowerNote;
+	private String borrowerName;
+	private String checkOutDate;
+	private String borrowerNote;
+
+	public DataRecord() {
+		authorName = "";
+		nationality = "";
+		birthPlace = "";
+		birthDate = null;
+		deathDate = null;
+		authorNote = "";
+
+		title = "";
+		category = "";
+		form = "";
+		publicationYear = "";
+		haveRead = false;
+		titleNote = "";
+		contents = "";
+
+		binding = "";
+		publisher = "";
+		publicationDate = "";
+		isbn = "";
+		libraryOfCongress = "";
+		asin = "";
+		volumeNote = "";
+
+		borrowerName = "";
+		checkOutDate = "";
+		borrowerNote = "";
+	}
 
 	/**
 	 * Load a record from a CSV file.
@@ -131,92 +162,184 @@ public class DataRecord {
 		return authorName;
 	}
 
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
+
 	public String getNationality() {
 		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
 	}
 
 	public String getBirthPlace() {
 		return birthPlace;
 	}
 
+	public void setBirthPlace(String birthPlace) {
+		this.birthPlace = birthPlace;
+	}
+
 	public LocalDate getBirthDate() {
 		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public LocalDate getDeathDate() {
 		return deathDate;
 	}
 
+	public void setDeathDate(LocalDate deathDate) {
+		this.deathDate = deathDate;
+	}
+
 	public String getAuthorNote() {
 		return authorNote;
+	}
+
+	public void setAuthorNote(String authorNote) {
+		this.authorNote = authorNote;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public String getCategory() {
 		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getForm() {
 		return form;
 	}
 
+	public void setForm(String form) {
+		this.form = form;
+	}
+
 	public String getPublicationYear() {
 		return publicationYear;
+	}
+
+	public void setPublicationYear(String publicationYear) {
+		this.publicationYear = publicationYear;
 	}
 
 	public boolean isHaveRead() {
 		return haveRead;
 	}
 
+	public void setHaveRead(boolean haveRead) {
+		this.haveRead = haveRead;
+	}
+
 	public String getTitleNote() {
 		return titleNote;
+	}
+
+	public void setTitleNote(String titleNote) {
+		this.titleNote = titleNote;
 	}
 
 	public String getContents() {
 		return contents;
 	}
 
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
 	public String getBinding() {
 		return binding;
+	}
+
+	public void setBinding(String binding) {
+		this.binding = binding;
 	}
 
 	public String getPublisher() {
 		return publisher;
 	}
 
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
 	public String getPublicationDate() {
 		return publicationDate;
+	}
+
+	public void setPublicationDate(String publicationDate) {
+		this.publicationDate = publicationDate;
 	}
 
 	public String getIsbn() {
 		return isbn;
 	}
 
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
 	public String getLibraryOfCongress() {
 		return libraryOfCongress;
+	}
+
+	public void setLibraryOfCongress(String libraryOfCongress) {
+		this.libraryOfCongress = libraryOfCongress;
 	}
 
 	public String getAsin() {
 		return asin;
 	}
 
+	public void setAsin(String asin) {
+		this.asin = asin;
+	}
+
 	public String getVolumeNote() {
 		return volumeNote;
+	}
+
+	public void setVolumeNote(String volumeNote) {
+		this.volumeNote = volumeNote;
 	}
 
 	public String getBorrowerName() {
 		return borrowerName;
 	}
 
+	public void setBorrowerName(String borrowerName) {
+		this.borrowerName = borrowerName;
+	}
+
 	public String getCheckOutDate() {
 		return checkOutDate;
 	}
 
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
+	}
+
 	public String getBorrowerNote() {
 		return borrowerNote;
+	}
+
+	public void setBorrowerNote(String borrowerNote) {
+		this.borrowerNote = borrowerNote;
 	}
 
 	// Methods to parse file input.
@@ -242,6 +365,41 @@ public class DataRecord {
 	}
 
 	private static boolean parseBoolean(String str) {
-		return str != null && ("y".equalsIgnoreCase(str) || "t".equalsIgnoreCase(str) || "true".equalsIgnoreCase(str));
+		return str != null && (str.toLowerCase().startsWith("y") || str.toLowerCase().startsWith("t"));
+	}
+
+	// Methods to format file output.
+
+	public List<String> getValues() {
+		List<String> result = new ArrayList<>();
+
+		result.add(getAuthorName());
+		result.add(getNationality());
+		result.add(getBirthPlace());
+		result.add(getBirthDate() == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(getBirthDate()));
+		result.add(getDeathDate() == null ? "" : DateTimeFormatter.ISO_LOCAL_DATE.format(getDeathDate()));
+		result.add(getAuthorNote());
+
+		result.add(getTitle());
+		result.add(getCategory());
+		result.add(getForm());
+		result.add(getPublicationYear());
+		result.add(isHaveRead() ? "Y" : "N");
+		result.add(getTitleNote());
+		result.add(getContents());
+
+		result.add(getBinding());
+		result.add(getPublisher());
+		result.add(getPublicationDate());
+		result.add(getIsbn());
+		result.add(getLibraryOfCongress());
+		result.add(getAsin());
+		result.add(getVolumeNote());
+
+		result.add(getBorrowerName());
+		result.add(getCheckOutDate());
+		result.add(getBorrowerNote());
+
+		return result;
 	}
 }
