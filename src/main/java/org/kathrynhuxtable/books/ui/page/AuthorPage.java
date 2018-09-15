@@ -154,6 +154,11 @@ public class AuthorPage extends AbstractPage {
 	}
 
 	@Override
+	protected void setObject(DomainObject object) {
+		author = (Author) object;
+	}
+
+	@Override
 	public void loadObject() {
 		if (author == null) {
 			author = new Author();
@@ -167,8 +172,6 @@ public class AuthorPage extends AbstractPage {
 		author.setDeathDate(deathDate.getValue());
 		author.setNote(note.getText());
 		author.setTitles(new TreeSet<Title>(titles.getItems()));
-
-		author = booksService.save(author);
 	}
 
 	public boolean isChangedInternal() {

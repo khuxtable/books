@@ -212,6 +212,11 @@ public class TitlePage extends AbstractPage {
 	}
 
 	@Override
+	protected void setObject(DomainObject object) {
+		titleObj = (Title) object;
+	}
+
+	@Override
 	protected void clearObject(boolean deleteFlag) {
 		if (deleteFlag) {
 			booksService.delete(getObject());
@@ -236,8 +241,6 @@ public class TitlePage extends AbstractPage {
 		titleObj.setVolumes(new TreeSet<>(volumes.getItems()));
 		titleObj.setNote(note.getText());
 		titleObj.setContents(new ArrayList<>(contents.getItems()));
-
-		titleObj = booksService.save(titleObj);
 	}
 
 	@Override

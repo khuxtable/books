@@ -130,6 +130,11 @@ public class BorrowerPage extends AbstractPage {
 	}
 
 	@Override
+	protected void setObject(DomainObject object) {
+		borrower = (Borrower) object;
+	}
+
+	@Override
 	protected void loadObject() {
 		if (borrower == null) {
 			borrower = new Borrower();
@@ -140,8 +145,6 @@ public class BorrowerPage extends AbstractPage {
 		borrower.setCheckOutDate(checkOutDate.getText());
 		borrower.setNote(note.getText());
 		borrower.setVolumes(new ArrayList<>(volumes.getItems()));
-
-		borrower = booksService.save(borrower);
 	}
 
 	@Override

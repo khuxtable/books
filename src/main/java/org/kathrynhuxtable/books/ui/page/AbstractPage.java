@@ -93,6 +93,8 @@ public abstract class AbstractPage {
 
 	protected abstract DomainObject getObject();
 
+	protected abstract void setObject(DomainObject object);
+
 	protected abstract void clearObject(boolean deleteFlag);
 
 	protected abstract void loadControls();
@@ -201,17 +203,27 @@ public abstract class AbstractPage {
 
 	public void doCancel() {
 		loadControls();
+		saveObject();
 		updateChangedStatus();
 	}
 
 	public void doSave() {
 		loadObject();
+		saveObject();
 		updateChangedStatus();
 	}
 
 	public void doDelete() {
 		clearObject(true);
 		getCommand(BACK).execute();
+	}
+
+	protected void saveObject() {
+		DomainObject object = booksService.save(getObject());
+		setObject(object);
+		if (getId() == null || getId() == 0L) {
+			setId(object.getId());
+		}
 	}
 
 	protected void updateChangedStatus() {

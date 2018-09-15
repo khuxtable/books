@@ -191,6 +191,11 @@ public class VolumePage extends AbstractPage {
 	}
 
 	@Override
+	protected void setObject(DomainObject object) {
+		volume = (Volume) object;
+	}
+
+	@Override
 	protected void loadObject() {
 		if (volume == null) {
 			volume = new Volume();
@@ -206,8 +211,6 @@ public class VolumePage extends AbstractPage {
 		volume.setAsin(asin.getText());
 		volume.setNote(note.getText());
 		volume.setBorrower(checkOut);
-
-		volume = booksService.save(volume);
 	}
 
 	@Override
