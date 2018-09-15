@@ -201,11 +201,15 @@ public class PageBrowserController {
 	}
 
 	private void doBack() {
-		PageHistory pageHistory = pastHistory.pop();
-		if (currentPageProperty().get() != null && currentPageProperty.get().getId() > 0) {
-			futureHistory.push(new PageHistory(currentPageProperty().get()));
+		if (pastHistory.isEmpty()) {
+			goToPageInternal(DocumentType.AUTHOR, 0L, false);
+		} else {
+			PageHistory pageHistory = pastHistory.pop();
+			if (currentPageProperty().get() != null && currentPageProperty.get().getId() > 0) {
+				futureHistory.push(new PageHistory(currentPageProperty().get()));
+			}
+			goToPageInternal(pageHistory.documentType, pageHistory.id, false);
 		}
-		goToPageInternal(pageHistory.documentType, pageHistory.id, false);
 	}
 
 	private void doForward() {
