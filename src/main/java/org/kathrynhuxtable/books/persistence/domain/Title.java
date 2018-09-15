@@ -67,7 +67,7 @@ public class Title implements DomainObject, Cloneable, Comparable<Title>, Serial
 	private String form;
 	@Field
 	private int publicationYear;
-	@Convert(converter=BooleanToYNConverter.class)
+	@Convert(converter = BooleanToYNConverter.class)
 	@Field
 	private boolean haveRead;
 	@Field
